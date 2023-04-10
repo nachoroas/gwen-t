@@ -1,6 +1,8 @@
 package cl.uchile.dcc
 package gwent
 
+//i forgot i didn't have to do this :(
+//therefore this is not completed
 class Player (
   private val name:String,
   private val pos:Int,
