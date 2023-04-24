@@ -6,12 +6,16 @@ import munit.FunSuite
 
 class PlayersTest extends FunSuite {
   var Jugador1:Player=_
+  var Mazo:Deck=_
+  var Mano:hand=_
 
   override def beforeEach(context: BeforeEach):Unit= {
-    Jugador1 = new Player("j1",2,"","")
+    Mazo = new Deck()
+    Mano = new Hand()
+    Jugador1 = new Player("j1",2,Mazo,Mano)
   }
   test("name") {
-     assertEquals(Jugador1.getname(), "j1")
+     assertEquals(Jugador1.getName(), "j1")
   }
   test("gem number"){
      assertEquals(Jugador1.gemnumber(),2)
@@ -20,16 +24,15 @@ class PlayersTest extends FunSuite {
      Jugador1.losegem()
      assertEquals(Jugador1.gemnumber(),1)
   }
-  test("deck"){
-    assertEquals(Jugador1.hasdeck(),false)
+  test("how many cards the player have in the hand"){
+    Mano.draw(Mazo)
+    Mano.draw(Mazo)    
+    assertEquals(Jugador1.handnumber(),2)
   }
-  test("hand"){
-    assertEquals(Jugador1.hashand(),false)
-  }
-  test("get a card from the deck"){
+  test(""){
     assertEquals(Jugador1.getcard(),true)
   }
   test("play a card"){
-    assertEquals((Jugador1.playcard(),true)
+    assertEquals((Jugador1.Playcard(),true)
   }
 }
