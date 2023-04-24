@@ -1,5 +1,5 @@
 package cl.uchile.dcc
-package gwent
+package gwent.Players
 
 //i forgot i didn't have to do this :(
 //therefore this is not completed

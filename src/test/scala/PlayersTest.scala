@@ -1,5 +1,6 @@
 package cl.uchile.dcc
-import cl.uchile.dcc.gwent.Player
+
+import cl.uchile.dcc.gwent.Players.Player
 import munit.FunSuite
 
 
