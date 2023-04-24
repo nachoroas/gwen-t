@@ -3,11 +3,16 @@ package gwent.CardClasses.SiegeCards
 
 import gwent.Cards
 
-abstract class SiegeCards (name:String,strenght:Int,ability:Int,potition:2) extends Cards {
+abstract class SiegeCards (protected val name:String,protected var strenght:Int,protected val ability:Int,protected val potition:2) extends Cards {
   
   // creare esta funcion cuando tenga para trabajar con el tablero
   // def beplayed : Void =
   def getName(): String = name
 
   def getStrenght(): Int = strenght
+
+  def loseStrenght(): Unit = {
+    strenght = 1
+  }
+  def be_played() : Boolean=true
 }

@@ -24,15 +24,18 @@ class PlayersTest extends FunSuite {
      Jugador1.losegem()
      assertEquals(Jugador1.gemnumber(),1)
   }
-  test("how many cards the player have in the hand"){
-    Mano.draw(Mazo)
-    Mano.draw(Mazo)    
-    assertEquals(Jugador1.handnumber(),2)
+  test("losing too much gems"){
+    Jugador1.losegem()
+    Jugador1.losegem()
+    assertEquals(Jugador1.losegem(),false)
   }
-  test(""){
-    assertEquals(Jugador1.getcard(),true)
+  test("how many cards the player have in the hand"){
+    Jugador1.DrawCard()
+    Jugador1.DrawCard()
+    assertEquals(Jugador1.handnumer(),7)
   }
   test("play a card"){
-    assertEquals((Jugador1.Playcard(),true)
+    assertEquals((Jugador1.PlayCard(3)),true)
+    assertEquals(Jugador1.handnumer(),4)
   }
 }

@@ -1,8 +1,6 @@
 package cl.uchile.dcc
 package gwent.CardClasses.RangedCards
 
-class Ranged4 (name:"pepe",strenght:2,ability:5) extends RangeCards(name, strenght, ability, potition = 1) {
-  def UseAbility(): Unit = {
-    //not yet implemented
-  }
+class Ranged4 extends RangeCards(name="tomas", strenght=2, ability=5, position = 1) {
+  def UseAbility(): Boolean = true
 }

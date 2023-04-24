@@ -23,10 +23,14 @@ class CardsTest extends FunSuite {
     assertEquals(Espada.getname(),"juan")
   }
   test("just strength"){
-    assertEquals(Espada.getstrength(),3)
+    assertEquals(Espada.getStrength(),3)
   }
   test("which ability"){
     assertEquals(Espada.UseAbility(),false)
+  }
+  test("losing streghnt"){
+    Espada.loseStrenght()
+    assertEquals(Espada.getStrenght(),1)
   }
 
 
