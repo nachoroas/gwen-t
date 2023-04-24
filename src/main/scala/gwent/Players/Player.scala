@@ -1,8 +1,6 @@
 package cl.uchile.dcc
 package gwent.Players
 
-//i forgot i didn't have to do this :(
-//therefore this is not completed
 class Player (name:String,mazo:Deck,mano:Hand) {
     private var gem=2
     def getName:String= name
@@ -16,21 +14,25 @@ class Player (name:String,mazo:Deck,mano:Hand) {
         else {
             false
         }
-        //devolver booleand es por mientras
-        // deberia perder pero necesito tener mucho mas trabajado para ver una partida terminada
-
     }
-    def DrawCard():Unit={
+    def DrawCard(mazo:Deck):Boolean={
+        if (mazo.GetLarge()>0){
          mano.draw_card(mazo)
+            true
+        }
+        else{
+            false
+        }
     }
-
     def PlayCard(index: Int): Boolean = {
-        mano.use_card(index)
-        true
+        if (mano.Largu()>0){
+            mano.use_card(index)
+          }
+        else{
+            false
+        }
     }
-    def handnumer():Int={
-        //len(list)
-    }
+    def handnumer():Int=mano.Largu()
 
 
 }

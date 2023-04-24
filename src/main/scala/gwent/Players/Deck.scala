@@ -9,69 +9,73 @@ import scala.util.Random
 
 
 
-class Deck ()  {
+class Deck (){
   private var mazo:List[Cards]=List()
+  private var large:Int=0
 
-  def inciador()={
-    val C1 =new Melee1
-    val C2 =new Melee2
-    val C3 =new Melee3
-    val C4 =new Melee4
-    val C5 =new Melee5
-    val C6 = new Melee6
-    val C7 = new Melee7
-    val C8 = new Ranged1
-    val C9 = new Ranged2
-    val C10 = new Ranged3
-    val C11 = new Ranged4
-    val C12 = new Ranged5
-    val C13 = new Ranged6
-    val C14 = new Ranged7
-    val C15 = new Siege1
-    val C16 = new Siege2
-    val C17 = new Siege3
-    val C18 = new Siege4
-    val C19 = new Siege5
-    val C20 = new Siege6
-    val C21 = new Siege7
-    val C22 = new Biting_Frost
-    val C23 = new Clear_Weather
-    val C24 = new Impenetrable_Fog
-    val C25 = new Torrential_Rain
+  def initiator()={
+    val Carta1 =new Melee1
+    val Carta2 =new Melee2
+    val Carta3 =new Melee3
+    val Carta4 =new Melee4
+    val Carta5 =new Melee5
+    val Carta6 = new Melee6
+    val Carta7 = new Melee7
+    val Carta8 = new Ranged1
+    val Carta9 = new Ranged2
+    val Carta10 = new Ranged3
+    val Carta11 = new Ranged4
+    val Carta12 = new Ranged5
+    val Carta13 = new Ranged6
+    val Carta14 = new Ranged7
+    val Carta15 = new Siege1
+    val Carta16 = new Siege2
+    val Carta17 = new Siege3
+    val Carta18 = new Siege4
+    val Carta19 = new Siege5
+    val Carta20 = new Siege6
+    val Carta21 = new Siege7
+    val Carta22 = new Biting_Frost
+    val Carta23 = new Clear_Weather
+    val Carta24 = new Impenetrable_Fog
+    val Carta25 = new Torrential_Rain
     
-    mazo= C1 :: mazo
-    mazo= C2 :: mazo
-    mazo= C3 :: mazo
-    mazo= C4 :: mazo
-    mazo= C5 :: mazo
-    mazo= C6 :: mazo
-    mazo= C7 :: mazo
-    mazo= C8 :: mazo
-    mazo= C9 :: mazo
-    mazo= C10 :: mazo
-    mazo= C11 :: mazo
-    mazo= C12 :: mazo
-    mazo= C13 :: mazo
-    mazo= C14 :: mazo
-    mazo= C15 :: mazo
-    mazo= C16 :: mazo
-    mazo= C17 :: mazo
-    mazo= C18 :: mazo
-    mazo= C19 :: mazo
-    mazo= C20 :: mazo
-    mazo= C21 :: mazo
-    mazo= C22 :: mazo
-    mazo= C23 :: mazo
-    mazo= C24 :: mazo
-    mazo= C25 :: mazo
+    mazo= Carta1 :: mazo
+    mazo= Carta2 :: mazo
+    mazo= Carta3 :: mazo
+    mazo= Carta4 :: mazo
+    mazo= Carta5 :: mazo
+    mazo= Carta6 :: mazo
+    mazo= Carta7 :: mazo
+    mazo= Carta8 :: mazo
+    mazo= Carta9 :: mazo
+    mazo= Carta10 :: mazo
+    mazo= Carta11 :: mazo
+    mazo= Carta12 :: mazo
+    mazo= Carta13 :: mazo
+    mazo= Carta14 :: mazo
+    mazo= Carta15 :: mazo
+    mazo= Carta16 :: mazo
+    mazo= Carta17 :: mazo
+    mazo= Carta18 :: mazo
+    mazo= Carta19 :: mazo
+    mazo= Carta20 :: mazo
+    mazo= Carta21 :: mazo
+    mazo= Carta22 :: mazo
+    mazo= Carta23 :: mazo
+    mazo= Carta24 :: mazo
+    mazo= Carta25 :: mazo
     mazo=Random.shuffle(mazo)
+    large=25
   }
 
   def draw_card():Cards={
     val carta=mazo.head
     mazo=mazo.tail
+    large=large-1
     carta
   }
+  def GetLarge():Int=large
 
 
 }
