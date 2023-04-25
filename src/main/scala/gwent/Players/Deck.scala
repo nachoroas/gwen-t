@@ -8,11 +8,42 @@ import cl.uchile.dcc.gwent.Cards
 import scala.util.Random
 
 
+/** A class representing a Deck.
+ *
+ * The deck is defined with a list for the cards and a large for the list
+ *
+ * @constructor the class is defined with a empty list but has a function to
+ *              create a deck with the 25 cards already defined in other classes
+ *
+ * @example
+ * {{{
+ *   val deck = new Deck()
+ *   deck.initiator()
+ *   deck.GerLarge=25
+ *   deck.draw_card= //here goes the first card in the deck
+ * }}}
+ */
 
 class Deck (){
   private var mazo:List[Cards]=List()
   private var large:Int=0
 
+  /** Creates 25 cards and adds them to the deck
+   *
+   * this funtion creates 25 cards alteady defined in other classes, after that
+   * add the cards to the list in the deck and sets the large of the deck in 25
+   * and also this funtion shuffles the deck
+   * @param void
+   *
+   * @return the deck already shuffled and with 25 cards
+   *
+   * @example
+   * {{{
+   *   val deck =new Deck()
+   *   deck.initiator()
+   *   now the deck is shuffled and with 25 cards
+   * }}}
+   */
   def initiator()={
     val Carta1 =new Melee1
     val Carta2 =new Melee2
@@ -69,12 +100,42 @@ class Deck (){
     large=25
   }
 
+  /** Draws a card from the deck
+   *
+   * this funtion draws the first card of the deck, saves it in a variable called "carta"
+   * then reduces the large of the deck by deleting its first card also discount 1 to te variable large
+   *
+   * @param void no parameters
+   *
+   * @return the first card
+   *
+   * @example
+   * {{{
+   *   val x= Deck.draw_card()
+   *   now x is the first card and Deck has a large discounted by 1
+   * }}}
+   */
   def draw_card():Cards={
+    // here i don't check if it there is cards to draw because the previous funtion
+    // only call this if it has at least 1 card
     val carta=mazo.head
     mazo=mazo.tail
     large=large-1
     carta
   }
+
+  /** gets the large of the class
+   *
+   * @param void no parameters
+   *
+   * @return the large of the class (and the list)
+   *
+   *  @example
+   *  {{{
+   *    val x = new Deck()
+   *    x.GetLarge()=0
+   *  }}}
+   */
   def GetLarge():Int=large
 
 
