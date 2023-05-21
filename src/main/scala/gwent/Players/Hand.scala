@@ -3,6 +3,8 @@ package gwent.Players
 
 import gwent.Cards
 
+import cl.uchile.dcc.gwent.Board.BoardSide
+
 /** A classes representing the hand of card at the moment of playing
  *
  * the hand depends on a deck tot draw cards from it
@@ -58,10 +60,10 @@ class Hand (Principal_deck:Deck)  {
    * val y=new hand(x)
    * y.use_card(2)=false //hand have no cards
    */
-   def use_card(index:Int):Boolean={
+   def use_card(index:Int,side:BoardSide):Boolean={
      if (index<largo) {
        val carta = mano(index)
-       carta.be_played()
+       carta.be_played(side)
        mano =mano.patch(index, Nil, 1)
        largo=largo-1
        true

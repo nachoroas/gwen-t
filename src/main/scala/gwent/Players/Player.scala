@@ -1,6 +1,8 @@
 package cl.uchile.dcc
 package gwent.Players
 
+import gwent.Board.BoardSide
+
 /** A class representing the player
  *
  * its the entity who plays the game
@@ -8,9 +10,7 @@ package gwent.Players
  * @param name the player has a name to differentiate from his oponent
  * @param mazo the player has a deck to get cards from it
  * @param mano the player has a hand to play cards from it
- *
  * @constructor the player is defined with 2 gems which are like his lives
- *
  * @example
  * {{{
  *   val a = new Deck()
@@ -18,8 +18,8 @@ package gwent.Players
  *   val x = new Player("bruno",a,b)
  * }}}
  */
-class Player (name:String,mazo:Deck,mano:Hand) {
-    private var gem=2
+class Player (name:String,mazo:Deck,mano:Hand,side:BoardSide) {
+  private var gem=2
   /** gets the name of the player
    *
    * @param void no parameters
@@ -117,7 +117,7 @@ class Player (name:String,mazo:Deck,mano:Hand) {
    */
     def PlayCard(index: Int): Boolean = {
         if (mano.Largu()>0){
-            mano.use_card(index)
+            mano.use_card(index,side)
           }
         else{
             false

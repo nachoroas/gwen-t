@@ -1,10 +1,8 @@
 package cl.uchile.dcc
 package gwent.Players
-import cl.uchile.dcc.gwent.CardClasses.MeleeCards.{Melee1, Melee2, Melee3, Melee4, Melee5, Melee6, Melee7}
-import cl.uchile.dcc.gwent.CardClasses.RangedCards.{Ranged1, Ranged2, Ranged3, Ranged4, Ranged5, Ranged6, Ranged7}
-import cl.uchile.dcc.gwent.CardClasses.SiegeCards.{Siege1, Siege2, Siege3, Siege4, Siege5, Siege6, Siege7}
-import cl.uchile.dcc.gwent.CardClasses.WeatherCards.{Biting_Frost, Clear_Weather, Impenetrable_Fog, Torrential_Rain}
+import cl.uchile.dcc.gwent.CardClasses.{MeleeCards, RangeCards, SiegeCards, WeatherCards}
 import cl.uchile.dcc.gwent.Cards
+
 import scala.util.Random
 
 
@@ -44,32 +42,32 @@ class Deck (){
    *   now the deck is shuffled and with 25 cards
    * }}}
    */
-  def initiator()={
-    val Carta1 =new Melee1
-    val Carta2 =new Melee2
-    val Carta3 =new Melee3
-    val Carta4 =new Melee4
-    val Carta5 =new Melee5
-    val Carta6 = new Melee6
-    val Carta7 = new Melee7
-    val Carta8 = new Ranged1
-    val Carta9 = new Ranged2
-    val Carta10 = new Ranged3
-    val Carta11 = new Ranged4
-    val Carta12 = new Ranged5
-    val Carta13 = new Ranged6
-    val Carta14 = new Ranged7
-    val Carta15 = new Siege1
-    val Carta16 = new Siege2
-    val Carta17 = new Siege3
-    val Carta18 = new Siege4
-    val Carta19 = new Siege5
-    val Carta20 = new Siege6
-    val Carta21 = new Siege7
-    val Carta22 = new Biting_Frost
-    val Carta23 = new Clear_Weather
-    val Carta24 = new Impenetrable_Fog
-    val Carta25 = new Torrential_Rain
+   def initiator()={
+    val Carta1 =new MeleeCards("a",1,0)
+    val Carta2 =new MeleeCards("b",2,0)
+    val Carta3 =new MeleeCards("c",3,0)
+    val Carta4 =new MeleeCards("d",4,0)
+    val Carta5 =new MeleeCards("e",5,0)
+    val Carta6 = new MeleeCards("f",6,0)
+    val Carta7 = new MeleeCards("g",7,0)
+    val Carta8 = new RangeCards("h",8,0)
+    val Carta9 = new RangeCards("i",9,0)
+    val Carta10 = new RangeCards("j",8,0)
+    val Carta11 = new RangeCards("k",7,0)
+    val Carta12 = new RangeCards("l",6,0)
+    val Carta13 = new RangeCards("m",5,0)
+    val Carta14 = new RangeCards("n",4,0)
+    val Carta15 = new SiegeCards("o",3,0)
+    val Carta16 = new SiegeCards("p",2,0)
+    val Carta17 = new SiegeCards("q",1,0)
+    val Carta18 = new SiegeCards("r",11,0)
+    val Carta19 = new SiegeCards("s",13,0)
+    val Carta20 = new SiegeCards("t",6,0)
+    val Carta21 = new SiegeCards("u",3,0)
+    val Carta22 = new WeatherCards("v",1)
+    val Carta23 = new WeatherCards("x",2)
+    val Carta24 = new WeatherCards("y",3)
+    val Carta25 = new WeatherCards("z",4)
     
     mazo= Carta1 :: mazo
     mazo= Carta2 :: mazo

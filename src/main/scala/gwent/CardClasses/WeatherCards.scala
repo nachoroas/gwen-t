@@ -1,7 +1,9 @@
 package cl.uchile.dcc
-package gwent.CardClasses.WeatherCards
+package gwent.CardClasses
 
 import gwent.Cards
+
+import cl.uchile.dcc.gwent.Board.{Board, BoardSide}
 
 /** a abstract class to define all the weather classes
  *
@@ -12,12 +14,10 @@ import gwent.Cards
  * @param ability the ability of the card, it is not yet implemented
  *                but i want to separate the abilities by numbers
  *
- * @param position the position of the card in the board
- *
  * ideally i won't use a abstract class to create a object so i will don't write a example
  */
 
-abstract class WeatherCards(protected val name:String, protected val ability:Int,protected val position:4) extends Cards{
+class WeatherCards(protected val name:String, protected val ability:Int) extends Cards{
 
   /** gets the name of the Weather card
    *
@@ -41,8 +41,16 @@ abstract class WeatherCards(protected val name:String, protected val ability:Int
    * a.be_played()=true
    * }}}
    */
-  
-  def be_played() : Boolean=true
+
+  def be_played(B: BoardSide): Unit = {
+    B.playcard(this)
+  }
+  def UseAbility():Boolean={
+    if (this.ability==0){
+      false
+    }
+    else true
+  }
 
   override def equals(o: Any): Boolean = {
     if (o.isInstanceOf[WeatherCards]) {
