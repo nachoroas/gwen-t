@@ -29,10 +29,11 @@ class BoardTest extends FunSuite {
     Jugador1 = new Player("j1", Mazo, Mano, Side1)
   }
   test("p1 playing cards"){
-    
+    Jugador1.PlayCard(0)
+    assertEquals(Jugador1.PlayCard(0),true)
   }
-  test(""){
-    
+  test("Manually playing cards"){
+    assertEquals(Board.playcard(Melee1),true)
   }
 
 }
