@@ -94,6 +94,7 @@ class Player (name:String,mazo:Deck,mano:Hand,side:BoardSide) {
    * val x = new Player("bruno", a, b)
    * x.playCard(3) // Returns false if the hand has no cards or the index is out of bounds
    */
+
     def PlayCard(index: Int): Boolean = {
         if (mano.Largu()>0){
             mano.use_card(index,side)
