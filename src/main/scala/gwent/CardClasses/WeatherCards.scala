@@ -5,46 +5,48 @@ import gwent.Cards
 
 import cl.uchile.dcc.gwent.Board.{Board, BoardSide}
 
-/** a abstract class to define all the weather classes
+/**
+ * Represents a weather card in the game.
  *
- * this class defines almost every method for the Siege unit classes
- *
- * @param name the name of the card
- *
- * @param ability the ability of the card, it is not yet implemented
- *                but i want to separate the abilities by numbers
- *
- * ideally i won't use a abstract class to create a object so i will don't write a example
+ * @param name The name of the weather card.
+ * @param ability The ability of the weather card.
  */
 
 class WeatherCards(protected val name:String, protected val ability:Int) extends Cards{
 
-  /** gets the name of the Weather card
+  /**
+   * Gets the name of the weather card.
    *
-   * @param void no parameters
-   * @return the name of the Weather card
+   * @return The name of the weather card.
    * @example
-   * {{{
-   * for a card which extend from here named "a"
-   * a.getName="card's name"   *
-   * }}}
+   * val card = new WeatherCards("Rain", 1)
+   * card.getName  // Returns "Rain"
    */
   def getName:String=name
 
-  /** its tell the card to play itself but its not yet implented
+  /**
+   * Plays the weather card on the specified board side..
    *
-   * @param void no parameters
-   * @return true of false
+   * @param Board The board side to play the card on.
+   * @return True if the card can be played, false otherwise.
    * @example
-   * {{{
-   * for a card which extend from here named "a"
-   * a.be_played()=true
-   * }}}
+   * val card = new WeatherCards("Rain", 1)
+   * card.be_played(boardSide)  // Returns true or false
    */
 
-  def be_played(B: BoardSide): Unit = {
-    B.playcard(this)
+  def be_played(Side: BoardSide): Unit = {
+    Side.playcard(this)
   }
+
+  /**
+   * Determines if the weather card's ability can be used.
+   * Note: This method is not yet implemented.
+   *
+   * @return True if the ability can be used, false otherwise.
+   * @example
+   * val card = new WeatherCards("Rain", 1)
+   * card.UseAbility()  // Returns true or false
+   */
   def UseAbility():Boolean={
     if (this.ability==0){
       false
@@ -56,7 +58,7 @@ class WeatherCards(protected val name:String, protected val ability:Int) extends
     if (o.isInstanceOf[WeatherCards]) {
       val otherCard=o.asInstanceOf[WeatherCards]
       this.getName== otherCard.getName
-    } else false
+    }else false
   }
 
 }

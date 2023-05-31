@@ -6,41 +6,27 @@ import cl.uchile.dcc.gwent.Cards
 import scala.util.Random
 
 
-/** A class representing a Deck.
+/**
+ * The `Deck` class represents a deck of cards.
  *
- * The deck is defined with a list for the cards and a large for the list
- *
- * @constructor the class is defined with a empty list but has a function to
- *              create a deck with the 25 cards already defined in other classes
- *
- * @example
- * {{{
- *   val deck = new Deck()
- *   deck.initiator()
- *   deck.GerLarge=25
- *   deck.draw_card= //here goes the first card in the deck
- * }}}
+ * @constructor Creates an empty deck.
  */
 
 class Deck (){
   private var mazo:List[Cards]=List()
   private var large:Int=0
 
-  /** Creates 25 cards and adds them to the deck
+  /**
+   * Initializes the deck with 25 predefined cards and shuffles them.
    *
-   * this funtion creates 25 cards alteady defined in other classes, after that
-   * add the cards to the list in the deck and sets the large of the deck in 25
-   * and also this funtion shuffles the deck
-   * @param void
+   * This function creates 25 cards of different types and adds them to the deck.
+   * It also sets the large of the deck to 25 and shuffles the cards.
    *
-   * @return the deck already shuffled and with 25 cards
-   *
+   * @return The initialized and shuffled deck with 25 cards.
    * @example
-   * {{{
-   *   val deck =new Deck()
-   *   deck.initiator()
-   *   now the deck is shuffled and with 25 cards
-   * }}}
+   * val deck = new Deck()
+   * deck.initiator()
+   * // The deck is now shuffled and contains 25 cards
    */
    def initiator()={
     val Carta1 =new MeleeCards("a",1,0)
@@ -98,20 +84,16 @@ class Deck (){
     large=25
   }
 
-  /** Draws a card from the deck
+  /**
+   * Draws a card from the deck.
    *
-   * this funtion draws the first card of the deck, saves it in a variable called "carta"
-   * then reduces the large of the deck by deleting its first card also discount 1 to te variable large
+   * This function draws the first card from the deck, removes it from the deck,
+   * and updates the large of the deck.
    *
-   * @param void no parameters
-   *
-   * @return the first card
-   *
+   * @return The first card from the deck.
    * @example
-   * {{{
-   *   val x= Deck.draw_card()
-   *   now x is the first card and Deck has a large discounted by 1
-   * }}}
+   * val x = deck.draw_card()
+   * // 'x' now contains the first card, and the deck has one card less
    */
   def draw_card():Cards={
     // here i don't check if it there is cards to draw because the previous funtion
@@ -122,17 +104,13 @@ class Deck (){
     carta
   }
 
-  /** gets the large of the class
+  /**
+   * Gets the number of cards in the deck.
    *
-   * @param void no parameters
-   *
-   * @return the large of the class (and the list)
-   *
-   *  @example
-   *  {{{
-   *    val x = new Deck()
-   *    x.GetLarge()=0
-   *  }}}
+   * @return The number of cards in the deck.
+   * @example
+   * val x = new Deck()
+   * x.getLarge() // Returns 0 if the deck is empty
    */
   def GetLarge():Int=large
 

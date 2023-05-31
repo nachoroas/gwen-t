@@ -5,31 +5,23 @@ import gwent.Cards
 
 import cl.uchile.dcc.gwent.Board.BoardSide
 
-/** A class to define all the Siege unit classes
+/**
+ * Represents a siege card in the game.
  *
- * this class defines almost every method for the Siege unit classes
- *
- * @param name the name of the card
- *
- * @param strenght the strenght of the card
- *
- * @param ability the ability of the card, it is not yet implemented
- *                but i want to separate the abilities by numbers
- *
- * ideally i won't use a abstract class to create a object so i will don't write a example
+ * @param name The name of the siege card.
+ * @param strength The strength of the siege card.
+ * @param ability The ability of the siege card.
  */
-
 class SiegeCards (name:String,strenght:Int,ability:Int) extends AbstractUnitClass(name,strenght,ability) {
-  
-  /** its tell the card to play itself but its not yet implented
+
+  /**
+   * Plays the siege card on the specified board side.
    *
-   * @param void no parameters
-   * @return true of false
+   * @param side The board side to play the card on.
+   * @return True if the card can be played, false otherwise.
    * @example
-   * {{{
-   * for a card which extend from here named "a"
-   * a.be_played()=true
-   * }}}
+   * val card = new SiegeCards("Cannon", 5, 0)
+   * card.be_played(boardSide)  // Returns true or false
    */
   def be_played(side: BoardSide): Unit = {
     side.playcard(this)

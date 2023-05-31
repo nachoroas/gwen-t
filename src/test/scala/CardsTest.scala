@@ -43,7 +43,10 @@ class CardsTest extends FunSuite {
     assertEquals(Siege1.equals(new SiegeCards("pele",1,1)),false)
     assertEquals(Weather.equals(new WeatherCards("Nice weather",1)),true)
     assertEquals(Weather.equals(new WeatherCards("pele",0)),false)
-
+    assertEquals(Melee1.equals(new RangeCards("pele",1,1)),false)
+    assertEquals(Ranged1.equals(new SiegeCards("pele",1,1)),false)
+    assertEquals(Siege1.equals(new MeleeCards("pele",1,1)),false)
+    assertEquals(Weather.equals(new MeleeCards("pele",1,1)),false)
   }
 
 
