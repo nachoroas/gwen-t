@@ -4,6 +4,8 @@ package gwent.CardClasses
 import gwent.Cards
 
 import cl.uchile.dcc.gwent.Board.BoardSide
+import cl.uchile.dcc.gwent.CardClasses.CardAbilities.Ability
+import cl.uchile.dcc.gwent.Visitor.Visitor
 
 /**
  * Represents a melee card in the game.
@@ -13,7 +15,7 @@ import cl.uchile.dcc.gwent.Board.BoardSide
  * @param ability The ability of the melee card.
  */
 
-class MeleeCards (name:String,strenght:Int,ability:Int) extends AbstractUnitClass(name,strenght,ability){
+case class MeleeCards (override val name:String,override val strenght:Int,override val ability:Ability) extends AbstractUnitClass(name,strenght,ability){
 
   /**
    * Plays the melee card on the game board.
@@ -26,15 +28,18 @@ class MeleeCards (name:String,strenght:Int,ability:Int) extends AbstractUnitClas
    */
   def be_played(side: BoardSide): Unit = {
     side.playcard(this)
+    
   }
 
-  override def equals(o: Any): Boolean = {
-    if (o.isInstanceOf[MeleeCards]) {
-      val otherCard = o.asInstanceOf[MeleeCards]
-      if (this.getName == otherCard.getName){
-        this.getStrenght == otherCard.getStrenght
-      }
-      else false
-    } else false
+  def accept(visitor: Visitor): Unit = {
+    visitor.visitMeleeCard(this)
+
   }
+  def notifyObserver(): Unit = {
+    for (r <- Observers) {
+      r.update(this, ability)
+    }
+  }
+  
+
 }

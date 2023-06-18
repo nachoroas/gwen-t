@@ -1,7 +1,8 @@
 package cl.uchile.dcc
-package gwent.States
+package gwent.Controller.States
 
-import gwent.{Cards, GameController}
+import gwent.Cards
+import cl.uchile.dcc.gwent.Controller.GameController
 
 
 class GameState protected(val context: GameController) {
@@ -23,13 +24,15 @@ class GameState protected(val context: GameController) {
   def toEndGame(): Unit = {
     transitionError("toEndGame")
   }
-  def doChangeCards():Unit={
-  }
-  def doDrawCard():Unit={
+  def doPlayCard(input:Int):Unit={
   }
   def doPlayCard():Unit={
   }
   def doPass_turn():Unit={
+  }
+  def doCPU_turn():Unit={
+  }
+  def doDrawCard(): Unit = {
   }
 
 

@@ -1,7 +1,7 @@
 package cl.uchile.dcc
-package gwent.States
+package gwent.Controller.States
 
-import gwent.GameController
+import cl.uchile.dcc.gwent.Controller.GameController
 
 class CPU_turn(context:GameController) extends GameState(context){
 
@@ -13,16 +13,12 @@ class CPU_turn(context:GameController) extends GameState(context){
     context.state = new EndRound(context)
   }
 
-  override def doDrawCard(): Unit = {
-    context.doDrawCard()
-  }
-
-  override def doPlayCard(): Unit = {
-    context.doPlayCard()
+  override def doCPU_turn(): Unit = {
+    context.doCPU_turn()
   }
 
   override def doPass_turn(): Unit = {
-    context.doPass_turn()
+    
   }
 
 }

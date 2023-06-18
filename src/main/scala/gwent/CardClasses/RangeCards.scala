@@ -4,6 +4,8 @@ package gwent.CardClasses
 import gwent.Cards
 
 import cl.uchile.dcc.gwent.Board.{Board, BoardSide}
+import cl.uchile.dcc.gwent.CardClasses.CardAbilities.Ability
+import cl.uchile.dcc.gwent.Visitor.Visitor
 
 /**
  * Represents a range card in the game.
@@ -13,7 +15,7 @@ import cl.uchile.dcc.gwent.Board.{Board, BoardSide}
  * @param ability The ability of the range card.
  */
 
-class RangeCards (name:String,strenght:Int,ability:Int) extends AbstractUnitClass(name,strenght,ability) {
+case class RangeCards (override val name:String,override val strenght:Int,override val ability:Ability) extends AbstractUnitClass(name,strenght,ability) {
 
   /**
    * Plays the range card on the game board.
@@ -28,13 +30,14 @@ class RangeCards (name:String,strenght:Int,ability:Int) extends AbstractUnitClas
     side.playcard(this)
   }
 
-  override def equals(o: Any): Boolean = {
-    if (o.isInstanceOf[RangeCards]) {
-      val otherCard = o.asInstanceOf[RangeCards]
-      if (this.getName == otherCard.getName) {
-        this.getStrenght == otherCard.getStrenght
-      }
-      else false
-    } else false
+  def accept(visitor: Visitor): Unit = {
+    visitor.visitRangeCard(this)
+
   }
+  def notifyObserver(): Unit = {
+    for (r <- Observers) {
+      r.update(this, ability)
+    }
+  }
+  
 }

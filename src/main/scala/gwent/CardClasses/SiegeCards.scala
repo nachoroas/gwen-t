@@ -4,15 +4,17 @@ package gwent.CardClasses
 import gwent.Cards
 
 import cl.uchile.dcc.gwent.Board.BoardSide
+import cl.uchile.dcc.gwent.CardClasses.CardAbilities.Ability
+import cl.uchile.dcc.gwent.Visitor.Visitor
 
 /**
  * Represents a siege card in the game.
  *
  * @param name The name of the siege card.
- * @param strength The strength of the siege card.
+ * @param strenght The strength of the siege card.
  * @param ability The ability of the siege card.
  */
-class SiegeCards (name:String,strenght:Int,ability:Int) extends AbstractUnitClass(name,strenght,ability) {
+case class SiegeCards (override val name:String,override val strenght:Int,override val ability:Ability) extends AbstractUnitClass(name,strenght,ability) {
 
   /**
    * Plays the siege card on the specified board side.
@@ -27,13 +29,13 @@ class SiegeCards (name:String,strenght:Int,ability:Int) extends AbstractUnitClas
     side.playcard(this)
   }
 
-  override def equals(o: Any): Boolean = {
-    if (o.isInstanceOf[SiegeCards]) {
-      val otherCard = o.asInstanceOf[SiegeCards]
-      if (this.getName == otherCard.getName) {
-        this.getStrenght == otherCard.getStrenght
-      }
-      else false
-    } else false
+  def accept(visitor: Visitor): Unit = {
+    visitor.visitSiegeCard(this)
+  }
+
+  def notifyObserver(): Unit = {
+    for (r <- Observers) {
+      r.update(this, ability)
+    }
   }
 }

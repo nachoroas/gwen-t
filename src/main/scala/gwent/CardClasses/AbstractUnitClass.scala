@@ -1,7 +1,11 @@
 package cl.uchile.dcc
 package gwent.CardClasses
 
-import gwent.Cards
+import gwent.{Cards, Subject}
+
+import cl.uchile.dcc.gwent.CardClasses.CardAbilities.Ability
+import cl.uchile.dcc.gwent.CardClasses.UnitCardStates.CardState
+import cl.uchile.dcc.gwent.Controller.Observer.Observer
 
 /**
  * An abstract base class representing a unit card in the game.
@@ -10,7 +14,11 @@ import gwent.Cards
  * @param strength The strength of the unit card.
  * @param ability The ability of the unit card.
  */
-abstract class AbstractUnitClass (protected val name:String,protected var strenght:Int,protected val ability:Int) extends Cards{
+abstract class AbstractUnitClass (protected val name:String,protected val strenght:Int,protected val ability:Ability) extends UnitCard {
+  
+  var State:CardState = new CardState(this)
+  var Observers:List[Observer]=List[Observer]()
+  private var mutableStrenght:Int=strenght
 
   /**
    * Gets the name of the unit card.
@@ -30,7 +38,16 @@ abstract class AbstractUnitClass (protected val name:String,protected var streng
    * val card = new ConcreteUnitClass("Soldier", 5, 0)
    * card.getStrength  // Returns 5
    */
-  def getStrenght: Int = strenght
+  def getStrenght: Int = strenght //mutable.strenght
+  
+  def restoreStrenght():Unit={
+    mutableStrenght=strenght
+  }
+  def setStrenght(n:Int):Unit={
+    mutableStrenght=n
+  }
+  
+  def getActualStrenght:Int= State.getStrenght //
 
   /**
    * Uses the ability of the unit card.
@@ -41,10 +58,10 @@ abstract class AbstractUnitClass (protected val name:String,protected var streng
    * val card = new ConcreteUnitClass("Soldier", 5, 1)
    * card.UseAbility()  // Returns true
    */
-  def UseAbility(): Boolean = {
-    if (this.ability == 0) {
-      false
-    }
-    else true
+  def getAbility(): String = ability.toString
+
+  def registerObserver(obs: Observer): Unit = {
+    Observers = obs :: Observers
   }
+    
 }

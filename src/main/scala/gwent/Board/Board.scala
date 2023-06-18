@@ -4,6 +4,7 @@ package gwent.Board
 import gwent.CardClasses.{MeleeCards, RangeCards, SiegeCards, WeatherCards}
 
 import cl.uchile.dcc.gwent.Cards
+import cl.uchile.dcc.gwent.Controller.Observer.Observer
 import cl.uchile.dcc.gwent.Players.Player
 
 /**
@@ -14,7 +15,7 @@ import cl.uchile.dcc.gwent.Players.Player
  * @param side2 The second side of the board.
  */
 class Board (side1: BoardSide,side2:BoardSide) {
-  private var WeatherZone: List[Cards] = List()
+  private var WeatherZone: List[WeatherCards] = List()
   private var LargoWeather: Int = 0
 
   /**
@@ -31,8 +32,14 @@ class Board (side1: BoardSide,side2:BoardSide) {
    * @param carta The weather card to be played.
    */
   def playcard(carta: WeatherCards): Unit = {
-    WeatherZone = carta :: WeatherZone
-    LargoWeather += 1
+    if (carta.getAbility()!="ClearWeather") {
+      WeatherZone = carta :: WeatherZone
+      LargoWeather += 1
+    }
+    else{
+      WeatherZone = List()
+      LargoWeather=0
+    }
   }
 
   /**
@@ -43,6 +50,7 @@ class Board (side1: BoardSide,side2:BoardSide) {
   def Ncards:Int={
     side1.getNcards+side2.getNcards+LargoWeather
   }
+  
 }
 
 

@@ -26,7 +26,7 @@ class BoardTest extends FunSuite {
     Side1 = new BoardSide
     Side2 = new BoardSide
     Board = new Board(Side1, Side2)
-    Board.setSides()
+    Board.setSides()    
     Jugador1 = new Player("j1", Mazo, Mano, Side1)
   }
   test("p1 playing cards"){

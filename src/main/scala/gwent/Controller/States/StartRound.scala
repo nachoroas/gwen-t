@@ -1,7 +1,7 @@
 package cl.uchile.dcc
-package gwent.States
+package gwent.Controller.States
 
-import gwent.GameController
+import cl.uchile.dcc.gwent.Controller.GameController
 
 class StartRound (context:GameController) extends GameState (context){
 
@@ -9,8 +9,5 @@ class StartRound (context:GameController) extends GameState (context){
     context.state= new PlayerTurn(context)
   }
 
-  override def doChangeCards(): Unit = {
-    context.doChangeCards()
-  }
 
 }

@@ -1,22 +1,29 @@
 package cl.uchile.dcc
 package gwent.Board
 
-import gwent.CardClasses.{MeleeCards, RangeCards, SiegeCards, WeatherCards}
+import gwent.CardClasses.{MeleeCards, RangeCards, SiegeCards, UnitCard, WeatherCards}
 
-import cl.uchile.dcc.gwent.Cards
+import cl.uchile.dcc.gwent.CardClasses.CardAbilities.Ability
+import cl.uchile.dcc.gwent.{Cards, Subject}
+import cl.uchile.dcc.gwent.Controller.Observer.Observer
+import cl.uchile.dcc.gwent.Visitor.getStrenghtVisitor
+
+import scala.collection.mutable
+import scala.collection.mutable.Map
 
 
 /**
  * The `BoardSide` class represents a side of the game board with different zones for melee, ranged, and siege cards.
  */
-class BoardSide(){
-  private var MeleeZone: List[Cards] = List()
+class BoardSide() extends Observer {
+  private var MeleeZone: List[MeleeCards] = List()
   private var LargoMelee: Int=0
-  private var RangedZone: List[Cards] = List()
+  private var RangedZone: List[RangeCards] = List()
   private var LargoRanged: Int=0
-  private var SiegeZone: List[Cards] = List()
+  private var SiegeZone: List[SiegeCards] = List()
   private var LargoSiege: Int=0
   private var Table:Board=_
+  private var ActiveAbilities:mutable.Map[Ability,List[UnitCard]]=mutable.Map.empty[Ability,List[UnitCard]]
 
   /**
    * Sets the board for this side by assigning the current board instance.
@@ -74,6 +81,18 @@ class BoardSide(){
    */
   def getNcards:Int=LargoSiege+LargoRanged+LargoMelee
 
+  private def getStrenght(Zone:List[UnitCard]):Int= {
+    var suma:Int = 0
+    for(r <- Zone){
+      suma += r.getActualStrenght
+    }
+    suma
+  }
+  def getTotalStrenght:Int={
+    getStrenght(MeleeZone)+getStrenght(RangedZone)+getStrenght(SiegeZone)
+  }
+
+
   /**
    * Clears the side of the board by resetting all zone lengths and emptying the zones.
    */
@@ -81,8 +100,25 @@ class BoardSide(){
     LargoSiege=0
     LargoRanged=0
     LargoMelee=0
-    MeleeZone=List[Cards]()
-    RangedZone=List[Cards]()
-    SiegeZone=List[Cards]()
+    MeleeZone=List[MeleeCards]()
+    RangedZone=List[RangeCards]()
+    SiegeZone=List[SiegeCards]()
+  }
+  def update(ability:Ability): Unit = {
+    ability.activateM(MeleeZone)
+    ability.activateR(RangedZone)
+    ability.activateS(SiegeZone)
+
+    }
+  def update(card:MeleeCards,ability:Ability):Unit={
+    ability.activateM(MeleeZone)
+  }
+
+  def update(card: RangeCards, ability: Ability): Unit = {
+    ability.activateR(RangedZone)
+  }
+
+  def update(card: SiegeCards, ability: Ability): Unit = {
+    ability.activateS(SiegeZone)
   }
 }

@@ -4,6 +4,8 @@ package gwent.Players
 import gwent.Cards
 
 import cl.uchile.dcc.gwent.Board.BoardSide
+import cl.uchile.dcc.gwent.CardClasses.WeatherCards
+import cl.uchile.dcc.gwent.Visitor.{getStrenghtVisitor, getWeatherCardVisitor}
 
 /** A classes representing the hand of card at the moment of playing
  *
@@ -63,7 +65,9 @@ class Hand (Principal_deck:Deck)  {
    def use_card(index:Int,side:BoardSide):Boolean={
      if (index<largo) {
        val carta = mano(index)
+       carta.registerObserver(side)
        carta.be_played(side)
+       carta.notifyObserver()
        mano =mano.patch(index, Nil, 1)
        largo=largo-1
        true
@@ -71,6 +75,22 @@ class Hand (Principal_deck:Deck)  {
      else{
        false
      }
+  }
+  def use_card(card:Cards,side:BoardSide):Unit={
+    for (r<-mano){
+      if (r==card){
+        card.be_played(side)
+        mano=mano
+        largo=largo-1
+      }
+    }
+  }
+  def getWeathersCard:List[WeatherCards]={
+    val v=new getWeatherCardVisitor
+    for (r<-mano){
+      r.accept(v)
+    }
+    v.getCards
   }
 
   /**
@@ -103,5 +123,12 @@ class Hand (Principal_deck:Deck)  {
       mano = y :: mano
       x=x+1
     }
+  }
+  def getTotalStrenght:Int={
+    val v= new getStrenghtVisitor
+    for (r <- mano){
+      r.accept(v) //arreglar
+    }
+    v.getResult
   }
 }

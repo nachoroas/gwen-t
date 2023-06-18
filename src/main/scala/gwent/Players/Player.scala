@@ -3,6 +3,9 @@ package gwent.Players
 
 import gwent.Board.BoardSide
 
+import cl.uchile.dcc.gwent.CardClasses.WeatherCards
+import cl.uchile.dcc.gwent.Cards
+
 /**
  * The `Player` class represents a player in the game.
  *
@@ -12,7 +15,7 @@ import gwent.Board.BoardSide
  * @param mano The hand of cards for the player.
  * @param side The board side assigned to the player.
  */
-class Player (name:String,mazo:Deck,mano:Hand,side:BoardSide) {
+case class Player (name:String,mazo:Deck,mano:Hand,side:BoardSide) {
   private var gem=2
 
   /**
@@ -65,7 +68,6 @@ class Player (name:String,mazo:Deck,mano:Hand,side:BoardSide) {
    * This function checks if the deck has cards. If the deck is empty, it returns `false`.
    * If there are cards in the deck, the function draws a card and adds it to the hand.
    *
-   * @param mazo The deck from which to draw the card.
    * @return `true` if a card was drawn and added to the hand, `false` if the deck is empty.
    * @example
    * val a = new Deck()
@@ -73,8 +75,8 @@ class Player (name:String,mazo:Deck,mano:Hand,side:BoardSide) {
    * val x = new Player("bruno", a, b)
    * x.drawCard(a) // Returns false if the deck has no cards
    */
-    def DrawCard(mazo:Deck):Boolean={
-        if (mazo.GetLarge()>0){
+    def DrawCard():Boolean={
+        if (mazo.GetLarge()>0 && mano.Largu()<10){
          mano.draw_card(mazo)
             true
         }
@@ -103,6 +105,9 @@ class Player (name:String,mazo:Deck,mano:Hand,side:BoardSide) {
             false
         }
     }
+  def PlayCard(card:Cards):Unit={
+    mano.use_card(card,side)
+  }
 
   /**
    * Gets the number of cards in the player's hand.
@@ -115,14 +120,14 @@ class Player (name:String,mazo:Deck,mano:Hand,side:BoardSide) {
    * x.handNumber() // Returns 0 if the hand is empty
    */
     def handnumer():Int=mano.Largu()
+  
+    def getTotalStrenght:Int={
+      mano.getTotalStrenght+side.getTotalStrenght
+    }
 
-    override def equals(o: Any): Boolean = {
-      if (o.isInstanceOf[Player]) {
-        val otherCard = o.asInstanceOf[Player]
-        this.getName == otherCard.getName
-      } 
-      else false
-  }
+    def getWeathersCard:List[WeatherCards]={
+      mano.getWeathersCard
+    }
 
 
 }

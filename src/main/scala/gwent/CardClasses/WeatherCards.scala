@@ -4,6 +4,10 @@ package gwent.CardClasses
 import gwent.Cards
 
 import cl.uchile.dcc.gwent.Board.{Board, BoardSide}
+import cl.uchile.dcc.gwent.CardClasses.CardAbilities.Ability
+import cl.uchile.dcc.gwent.Controller.Observer.Observer
+import cl.uchile.dcc.gwent.Visitor.Visitor
+import cl.uchile.dcc.gwent.Subject
 
 /**
  * Represents a weather card in the game.
@@ -12,8 +16,9 @@ import cl.uchile.dcc.gwent.Board.{Board, BoardSide}
  * @param ability The ability of the weather card.
  */
 
-class WeatherCards(protected val name:String, protected val ability:Int) extends Cards{
-
+case class WeatherCards(private val name:String, private val ability:Ability) extends Cards {
+  private var Observers:List[Observer]=List[Observer]()
+  
   /**
    * Gets the name of the weather card.
    *
@@ -47,18 +52,21 @@ class WeatherCards(protected val name:String, protected val ability:Int) extends
    * val card = new WeatherCards("Rain", 1)
    * card.UseAbility()  // Returns true or false
    */
-  def UseAbility():Boolean={
-    if (this.ability==0){
-      false
+  def getAbility():String=ability.toString
+  
+  def accept(visitor:Visitor):Unit={
+    visitor.visitWeatherCard(this)
+  }
+
+  def registerObserver(obs: Observer): Unit={
+    Observers=obs :: Observers
+  }
+
+  def notifyObserver(): Unit ={
+    for(r<-Observers){
+      r.update(ability)
+      }
     }
-    else true
-  }
-
-  override def equals(o: Any): Boolean = {
-    if (o.isInstanceOf[WeatherCards]) {
-      val otherCard=o.asInstanceOf[WeatherCards]
-      this.getName== otherCard.getName
-    }else false
-  }
-
+    
+  
 }
