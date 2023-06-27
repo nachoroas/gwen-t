@@ -2,6 +2,8 @@ package cl.uchile.dcc
 package gwent.CardClasses.CardAbilities
 import gwent.CardClasses.{MeleeCards, RangeCards, SiegeCards, UnitCard}
 
+import cl.uchile.dcc.gwent.CardClasses.Effects.TightBondEffect
+
 class TightBond extends ComposerAbility {
 
   override def activateM(list: List[MeleeCards]): Unit = {
@@ -19,10 +21,9 @@ class TightBond extends ComposerAbility {
     function(list,exampleCard)
   }
   private def function[T<:UnitCard](list: List[T],card:T):Unit={
-    card.State.toTightBondState()
     for (r <- list) {
       if (card.equals(r)) {
-        r.State.toTightBondState()
+        r.addEffect(new TightBondEffect())
       }
     }
 

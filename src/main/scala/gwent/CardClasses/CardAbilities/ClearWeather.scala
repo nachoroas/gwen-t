@@ -7,17 +7,17 @@ class ClearWeather extends ComposerAbility {
 
   override def activateM(list:List[MeleeCards]): Unit = {
     for (r<-list){
-      r.State.toRegularState()
+      r.removeEffect()
     }
   }
   override def activateR(list: List[RangeCards]): Unit = {
     for (r <- list) {
-      r.State.toRegularState()
+      r.removeEffect()
     }
   }
   override def activateS(list: List[SiegeCards]): Unit = {
     for (r <- list) {
-      r.State.toRegularState()
+      r.removeEffect()
     }
   }
 

@@ -1,5 +1,6 @@
 package cl.uchile.dcc
 import cl.uchile.dcc.gwent.CardClasses.CardAbilities.{Ability, ClearWeather, MoralReinforcement, NoAbility, TightBond}
+import cl.uchile.dcc.gwent.CardClasses.Effects.{Frozen, MoralReinforcementEffect, TightBondEffect}
 import cl.uchile.dcc.gwent.CardClasses.{MeleeCards, RangeCards, SiegeCards, WeatherCards}
 import cl.uchile.dcc.gwent.Cards
 import munit.{FunSuite, Slow}
@@ -39,8 +40,6 @@ class CardsTest extends FunSuite {
     assertEquals(Ranged1.getStrenght, 7)
     assertEquals(Siege1.getStrenght, 2)
   }
-
-
   test("some equals between the cards"){
     assertEquals(Melee1.equals(MeleeCards("alejandro",5,NA)),true)
     assertEquals(Melee1.equals(MeleeCards("pele",1,NA)),false)
@@ -61,17 +60,23 @@ class CardsTest extends FunSuite {
     assertEquals(Siege1.getAbility(),"TightBond")
     assertEquals(Weather.getAbility(),"ClearWeather")
   }
-  test("States"){
-    Melee1.State.toTightBondState()
-    assertEquals(Melee1.getActualStrenght,10)
-    Melee1.State.toFrozenState()
-    assertEquals(Melee1.getActualStrenght,2)
-    Melee1.State.toMoralBState()
-    assertEquals(Melee1.getActualStrenght,3)
-    Melee1.State.toMoralBState()
-    assertEquals(Melee1.getActualStrenght,4)
-    Melee1.State.toRegularState()
-    assertEquals(Melee1.getActualStrenght,12)
+  test("effects on cards"){
+    Melee1.addEffect(new Frozen)
+    assertEquals(Melee1.getStrenght,1)
+    Melee1.addEffect(new MoralReinforcementEffect)
+    assertEquals(Melee1.getStrenght,2)
+    Melee1.addEffect(new MoralReinforcementEffect)
+    assertEquals(Melee1.getStrenght,3)
+    Melee1.addEffect(new TightBondEffect)
+    assertEquals(Melee1.getStrenght,6)
+    Melee1.addEffect(new TightBondEffect)
+    assertEquals(Melee1.getStrenght,12)
+    Melee1.addEffect(new MoralReinforcementEffect)
+    assertEquals(Melee1.getStrenght,16)
+    Melee1.removeEffect()
+    assertEquals(Melee1.getStrenght,32)
+    Melee1.addEffect(new MoralReinforcementEffect)
+    assertEquals(Melee1.getStrenght,36)
   }
 
 

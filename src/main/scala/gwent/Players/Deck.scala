@@ -114,6 +114,11 @@ class Deck (){
    * x.getLarge() // Returns 0 if the deck is empty
    */
   def GetLarge():Int=large
+  
+  def addCard(card:Cards):Unit={
+    mazo = card :: mazo
+    large= large+1
+  }
 
 
 }

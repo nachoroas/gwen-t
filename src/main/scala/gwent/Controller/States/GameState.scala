@@ -2,7 +2,9 @@ package cl.uchile.dcc
 package gwent.Controller.States
 
 import gwent.Cards
+
 import cl.uchile.dcc.gwent.Controller.GameController
+import cl.uchile.dcc.gwent.Players.{Hand, Player}
 
 
 class GameState protected(val context: GameController) {
@@ -24,22 +26,40 @@ class GameState protected(val context: GameController) {
   def toEndGame(): Unit = {
     transitionError("toEndGame")
   }
-  def doPlayCard(input:Int):Unit={
+  def doPlayCard(input:Int,j:Player):Unit={
+    ActionError("doPlayCard")
   }
-  def doPlayCard():Unit={
+  def doPlayCard(card:Cards,j:Player):Unit={
+    ActionError("doPlayCard")
   }
   def doPass_turn():Unit={
+    ActionError("doPass_turn")
   }
-  def doCPU_turn():Unit={
+  def doCPU_turn(j:Player,P:Player,m:Hand):Unit={
+    ActionError("doCPU_turn")
   }
-  def doDrawCard(): Unit = {
+  def doDrawCard(j:Player): Unit = {
+    ActionError("doDrawCard")
   }
+  /*
+  def getWinner(p:Player,c:Player):Unit={
+    ActionError("getWinner")
+  }
+  */
 
 
   private def transitionError(targetState: String): Unit = {
     throw new InvalidTransitionException(
       s"Cannot transition from ${getClass.getSimpleName} to $targetState"
     )
+  }
+  private def ActionError(action: String): Unit = {
+    throw new InvalidActionException(
+      s"Cannot do $action in ${getClass.getSimpleName}"
+    )
+  }
+  def getState():String={
+    getClass.getSimpleName
   }
 
 

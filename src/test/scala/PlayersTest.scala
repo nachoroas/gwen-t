@@ -1,13 +1,22 @@
 package cl.uchile.dcc
 
 import cl.uchile.dcc.gwent.Board.{Board, BoardSide}
-import cl.uchile.dcc.gwent.CardClasses.CardAbilities.NoAbility
-import cl.uchile.dcc.gwent.CardClasses.MeleeCards
+import cl.uchile.dcc.gwent.CardClasses.CardAbilities.{Ability, ClearWeather, MoralReinforcement, NoAbility, TightBond}
+import cl.uchile.dcc.gwent.CardClasses.{MeleeCards, RangeCards, SiegeCards, WeatherCards}
 import cl.uchile.dcc.gwent.Players.{Deck, Hand, Player}
 import munit.FunSuite
 
+import javax.print.attribute.standard.MediaSize.NA
+
 
 class PlayersTest extends FunSuite {
+  var Melee1: MeleeCards = _
+  var Ranged1: RangeCards = _
+  var Siege1: SiegeCards = _
+  var NA: Ability = _
+  var MR: Ability = _
+  var TB: Ability = _
+  var CW: Ability = _
   var Jugador1:Player=_
   var Jugador2:Player=_
   var Mazo:Deck=_
@@ -15,8 +24,17 @@ class PlayersTest extends FunSuite {
   var Side1:BoardSide=_
   var Side2:BoardSide=_
   var Board:Board=_
+  var Weather:WeatherCards=_
 
   override def beforeEach(context: BeforeEach):Unit= {
+    NA = new NoAbility
+    MR = new MoralReinforcement
+    TB = new TightBond
+    CW = new ClearWeather
+    Melee1 = MeleeCards("alejandro", 5, NA)
+    Ranged1 = RangeCards("Pepe", 7, MR)
+    Siege1 = SiegeCards("Catapulta", 2, TB)
+    Weather= WeatherCards("Nice weather",CW)
     Mazo = new Deck()
     Mazo.initiator()
     Mano = new Hand(Mazo)
@@ -25,7 +43,6 @@ class PlayersTest extends FunSuite {
     Side2= new BoardSide
     Board= new Board(Side1,Side2)
     Board.setSides()
-
     Jugador1 = Player("j1",Mazo,Mano,Side1)
     Jugador2 = Player("j2",Mazo,Mano,Side1)
   }
@@ -57,7 +74,7 @@ class PlayersTest extends FunSuite {
   test("you can't play a card with no hand"){
     Mazo= new Deck()
     Mano= new Hand (Mazo)
-    Jugador1 = new Player("j1",Mazo,Mano,Side1)
+    Jugador1 = Player("j1",Mazo,Mano,Side1)
     assertEquals(Jugador1.PlayCard(10),false)
   }
   test("When you play a card you lose a card in the hand"){
@@ -65,7 +82,6 @@ class PlayersTest extends FunSuite {
     assertEquals(Jugador1.PlayCard(7),false)
     assertEquals(Jugador1.handnumer(),4)
   }
-
   test("equals between players"){
     assertEquals(Jugador1.equals(Jugador2),false)
     assertEquals(Jugador1.equals(Jugador1),true)
@@ -85,11 +101,27 @@ class PlayersTest extends FunSuite {
     assertEquals(Mano.draw_card(Mazo),false)
   }
   test("Playing a card saying the card"){
-    
-
+    Mazo.addCard(Melee1)
+    Mano.draw_card(Mazo)
+    Jugador1.PlayCard(Melee1)
+    assertEquals(Side1.getNcards,1)
   }
   test("Total strenght"){
-    
+    Mazo=new Deck()
+    Mazo.addCard(Melee1)
+    Mazo.addCard(Ranged1)
+    Mano=new Hand(Mazo)
+    Mano.draw_card(Mazo)
+    Mano.draw_card(Mazo)
+    val j1: Player = Player("juan", Mazo, Mano, Side1)
+    j1.PlayCard(Melee1)
+    assertEquals(j1.getTotalStrenght,12)
   }
-  
+  test("get any weather card on hand"){
+    Mazo.addCard(Weather)
+    Mano=new Hand(Mazo)
+    Mano.draw_card(Mazo)
+    val J1: Player = Player("pepe", Mazo, Mano, Side1)
+    assertEquals(J1.getWeathersCard.head,Weather)
+  }
 }

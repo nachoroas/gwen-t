@@ -3,12 +3,15 @@ package gwent.CardClasses
 
 import gwent.Cards
 
-import cl.uchile.dcc.gwent.CardClasses.UnitCardStates.CardState
+import cl.uchile.dcc.gwent.CardClasses.Effects.{Frozen, MoralReinforcementEffect, TightBondEffect}
 
 trait UnitCard extends Cards{
-  var State:CardState
   def getStrenght:Int
 
-  def getActualStrenght:Int
+  def addEffect(effect:Frozen):Unit
+
+  def addEffect(effect:TightBondEffect):Unit
+
+  def addEffect(effect:MoralReinforcementEffect):Unit
 
 }

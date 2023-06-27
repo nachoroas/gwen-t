@@ -84,7 +84,7 @@ class BoardSide() extends Observer {
   private def getStrenght(Zone:List[UnitCard]):Int= {
     var suma:Int = 0
     for(r <- Zone){
-      suma += r.getActualStrenght
+      suma += r.getStrenght
     }
     suma
   }

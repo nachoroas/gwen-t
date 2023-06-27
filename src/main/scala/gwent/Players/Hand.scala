@@ -7,6 +7,8 @@ import cl.uchile.dcc.gwent.Board.BoardSide
 import cl.uchile.dcc.gwent.CardClasses.WeatherCards
 import cl.uchile.dcc.gwent.Visitor.{getStrenghtVisitor, getWeatherCardVisitor}
 
+import scala.collection.mutable.ListBuffer
+
 /** A classes representing the hand of card at the moment of playing
  *
  * the hand depends on a deck tot draw cards from it
@@ -80,12 +82,12 @@ class Hand (Principal_deck:Deck)  {
     for (r<-mano){
       if (r==card){
         card.be_played(side)
-        mano=mano
+        mano=mano.filter(_ != r)
         largo=largo-1
       }
     }
   }
-  def getWeathersCard:List[WeatherCards]={
+  def getWeathersCard:ListBuffer[WeatherCards]={
     val v=new getWeatherCardVisitor
     for (r<-mano){
       r.accept(v)
@@ -127,7 +129,7 @@ class Hand (Principal_deck:Deck)  {
   def getTotalStrenght:Int={
     val v= new getStrenghtVisitor
     for (r <- mano){
-      r.accept(v) //arreglar
+      r.accept(v)
     }
     v.getResult
   }

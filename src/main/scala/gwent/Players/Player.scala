@@ -6,6 +6,8 @@ import gwent.Board.BoardSide
 import cl.uchile.dcc.gwent.CardClasses.WeatherCards
 import cl.uchile.dcc.gwent.Cards
 
+import scala.collection.mutable.ListBuffer
+
 /**
  * The `Player` class represents a player in the game.
  *
@@ -125,7 +127,7 @@ case class Player (name:String,mazo:Deck,mano:Hand,side:BoardSide) {
       mano.getTotalStrenght+side.getTotalStrenght
     }
 
-    def getWeathersCard:List[WeatherCards]={
+    def getWeathersCard:ListBuffer[WeatherCards]={
       mano.getWeathersCard
     }
 
