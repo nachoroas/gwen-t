@@ -3,11 +3,12 @@ package gwent
 
 import gwent.Board.BoardSide
 
+import cl.uchile.dcc.gwent.Controller.Observer.CardObserver
 import cl.uchile.dcc.gwent.Visitor.Visitor
 
 
 /**Trait for the cards which can be in the hand or deck*/
-trait Cards extends Subject {
+trait Cards extends Subject[CardObserver] {
   def getName: String
 
   def getAbility(): String

@@ -6,7 +6,7 @@ import gwent.{Cards, Subject}
 import cl.uchile.dcc.gwent.CardClasses.CardAbilities.Ability
 import cl.uchile.dcc.gwent.CardClasses.Effects.Evisitor.GetFrozenEffect
 import cl.uchile.dcc.gwent.CardClasses.Effects.{Effect, Frozen,  MoralReinforcementEffect,  TightBondEffect}
-import cl.uchile.dcc.gwent.Controller.Observer.Observer
+import cl.uchile.dcc.gwent.Controller.Observer.CardObserver
 import cl.uchile.dcc.gwent.Visitor.getWeatherCardVisitor
 
 import scala.::
@@ -21,7 +21,7 @@ import scala.collection.mutable.ListBuffer
  */
 abstract class AbstractUnitClass (protected val name:String,protected val strenght:Int,protected val ability:Ability) extends UnitCard {
   
-  var Observers:List[Observer]=List[Observer]()
+  var Observers:List[CardObserver]=List[CardObserver]()
   private var effects:List[Effect]=List[Effect]()
 
   /**
@@ -74,8 +74,16 @@ abstract class AbstractUnitClass (protected val name:String,protected val streng
   }
 
   }
-  def removeEffect():Unit={
-    effects=effects.tail
+  def removeEffect():Unit= {
+    if (effects.nonEmpty) {
+      val v = new GetFrozenEffect
+      for (r <- effects) {
+        r.accept(v)
+      }
+      if (v.IsFrozen) {
+        effects = effects.tail
+      }
+    }
   }
 
   /**
@@ -89,7 +97,7 @@ abstract class AbstractUnitClass (protected val name:String,protected val streng
    */
   def getAbility(): String = ability.toString
 
-  def registerObserver(obs: Observer): Unit = {
+  def registerObserver(obs: CardObserver): Unit = {
     Observers = obs :: Observers
   }
     

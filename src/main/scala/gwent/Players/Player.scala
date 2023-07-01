@@ -4,7 +4,9 @@ package gwent.Players
 import gwent.Board.BoardSide
 
 import cl.uchile.dcc.gwent.CardClasses.WeatherCards
-import cl.uchile.dcc.gwent.Cards
+import cl.uchile.dcc.gwent.Controller.Observer.PlayerObserver
+import cl.uchile.dcc.gwent.{Cards, Subject}
+import cl.uchile.dcc.gwent.Players.NoMoreGemsException
 
 import scala.collection.mutable.ListBuffer
 
@@ -17,8 +19,17 @@ import scala.collection.mutable.ListBuffer
  * @param mano The hand of cards for the player.
  * @param side The board side assigned to the player.
  */
-case class Player (name:String,mazo:Deck,mano:Hand,side:BoardSide) {
+case class Player (name:String,mazo:Deck,mano:Hand,side:BoardSide) extends Subject[PlayerObserver] {
   private var gem=2
+  private val observers:ListBuffer[PlayerObserver]=ListBuffer()
+
+  def registerObserver(obs: PlayerObserver): Unit={
+    observers.append(obs)
+  }
+
+  def notifyObserver(): Unit={
+    observers.foreach(_.update(this))
+  }
 
   /**
    * Gets the name of the player.
@@ -54,14 +65,19 @@ case class Player (name:String,mazo:Deck,mano:Hand,side:BoardSide) {
    * val x = new Player("bruno", a, b)
    * x.loseGem() // Returns true if the player had at least 1 gem and decreases the gem count by 1, otherwise returns false
    */
-    def losegem(): Boolean = {
-        if (gem > 0) {
-            gem = gem - 1
-            true
+    def losegem(): Unit = {
+      try {
+        if (gem > 1) {
+          gem = gem - 1
         }
         else {
-            false
+          throw new NoMoreGemsException()
         }
+      }
+      catch{
+        case e:NoMoreGemsException => notifyObserver()
+      } 
+      
     }
 
   /**
@@ -126,9 +142,15 @@ case class Player (name:String,mazo:Deck,mano:Hand,side:BoardSide) {
     def getTotalStrenght:Int={
       mano.getTotalStrenght+side.getTotalStrenght
     }
+    def getSideStrenght:Int={
+      side.getTotalStrenght
+    }
 
     def getWeathersCard:ListBuffer[WeatherCards]={
       mano.getWeathersCard
+    }
+    def ShuffleDeck():Unit={
+      mazo.Shuffle()
     }
 
 

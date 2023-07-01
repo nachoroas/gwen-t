@@ -5,9 +5,9 @@ import gwent.Controller.Observer.Observer
 
 import cl.uchile.dcc.gwent.CardClasses.CardAbilities.Ability
 
-trait Subject {
+trait Subject[T <: Observer]{
 
-  def registerObserver(obs: Observer):Unit
+  def registerObserver(obs: T):Unit
 
   def notifyObserver():Unit
 

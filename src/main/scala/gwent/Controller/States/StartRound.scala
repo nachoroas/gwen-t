@@ -9,6 +9,10 @@ class StartRound (context:GameController) extends GameState (context){
   override def toPlayerTurn(): Unit = {
     context.state= new PlayerTurn(context)
   }
+  override def ShuffleDeck(j:Player,c:Player): Unit = {
+    j.ShuffleDeck()
+    c.ShuffleDeck()
+  }
 
   override def doDrawCard(j:Player): Unit = {
     j.DrawCard()

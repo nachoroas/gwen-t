@@ -4,13 +4,15 @@ package gwent.Controller
 import gwent.Board.{Board, BoardSide}
 import gwent.Cards
 import gwent.Players.{Deck, Hand, Player}
-import cl.uchile.dcc.gwent.Controller.States.{GameState, StartGame}
+
+import cl.uchile.dcc.gwent.Controller.Observer.PlayerObserver
+import cl.uchile.dcc.gwent.Controller.States.{EndGame, GameState, StartGame}
 
 import scala.collection.mutable
 import scala.util.Random
 
 
-class GameController() {
+class GameController() extends PlayerObserver {
 
   var state: GameState = new StartGame(this)
   private val Side1: BoardSide = new BoardSide
@@ -27,6 +29,8 @@ class GameController() {
   ManoCPU.incial(mazoCPU)
   private val player: Player = Player("Player",mazoP,ManoP,Side1)
   private val CPU: Player = Player("CPU",mazoCPU,ManoCPU,Side2)
+  player.registerObserver(this)
+  CPU.registerObserver(this)
 
   
   def getBoardNcards:Int={
@@ -50,6 +54,9 @@ class GameController() {
   def doPass_turn():Unit={
     state.doPass_turn()
   }
+  def LoseGems():Unit={
+    state.LoseGems(player,CPU)
+  }
   def getState():String={
     state.getState()
   }
@@ -68,5 +75,17 @@ class GameController() {
   def toEndGame():Unit={
     state.toEndGame()
   }
-
+  def ShuffleDeck():Unit={
+    state.ShuffleDeck(player,CPU)
+  }
+  def update(player: Player): Unit ={
+    if (player.equals(CPU)){
+      println("El Jugador ha Ganado")
+      state= new EndGame(this)
+    }
+    else{
+      println("La CPU ha Ganado")
+      state= new EndGame(this)
+    }
+  } 
 }

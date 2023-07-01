@@ -26,6 +26,7 @@ class PerpetualCPU(context:GameController) extends GameState(context) {
 
   override def doPass_turn(): Unit = {
     context.state=new EndRound(context)
+    context.LoseGems()
   }
 
 }

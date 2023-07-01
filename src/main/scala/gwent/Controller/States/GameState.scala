@@ -41,13 +41,13 @@ class GameState protected(val context: GameController) {
   def doDrawCard(j:Player): Unit = {
     ActionError("doDrawCard")
   }
-  /*
-  def getWinner(p:Player,c:Player):Unit={
-    ActionError("getWinner")
+  def LoseGems(p:Player,c:Player):Unit={
+    ActionError("LoseGems")
   }
-  */
-
-
+  def ShuffleDeck(p:Player,c:Player):Unit={
+    ActionError("ShuffleDeck")
+  }
+  
   private def transitionError(targetState: String): Unit = {
     throw new InvalidTransitionException(
       s"Cannot transition from ${getClass.getSimpleName} to $targetState"

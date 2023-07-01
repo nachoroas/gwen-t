@@ -5,7 +5,7 @@ import gwent.CardClasses.{MeleeCards, RangeCards, SiegeCards, UnitCard, WeatherC
 
 import cl.uchile.dcc.gwent.CardClasses.CardAbilities.Ability
 import cl.uchile.dcc.gwent.{Cards, Subject}
-import cl.uchile.dcc.gwent.Controller.Observer.Observer
+import cl.uchile.dcc.gwent.Controller.Observer.CardObserver
 import cl.uchile.dcc.gwent.Visitor.getStrenghtVisitor
 
 import scala.collection.mutable
@@ -15,7 +15,7 @@ import scala.collection.mutable.Map
 /**
  * The `BoardSide` class represents a side of the game board with different zones for melee, ranged, and siege cards.
  */
-class BoardSide() extends Observer {
+class BoardSide() extends CardObserver {
   private var MeleeZone: List[MeleeCards] = List()
   private var LargoMelee: Int=0
   private var RangedZone: List[RangeCards] = List()

@@ -119,8 +119,8 @@ class Hand (Principal_deck:Deck)  {
    */
   def incial(Principal_deck:Deck): Unit = {
     var x=0
-    largo=5
-    while(x<5) {
+    largo=10
+    while(x<10) {
       val y=Principal_deck.draw_card()
       mano = y :: mano
       x=x+1

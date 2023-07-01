@@ -5,7 +5,7 @@ import gwent.Cards
 
 import cl.uchile.dcc.gwent.Board.{Board, BoardSide}
 import cl.uchile.dcc.gwent.CardClasses.CardAbilities.Ability
-import cl.uchile.dcc.gwent.Controller.Observer.Observer
+import cl.uchile.dcc.gwent.Controller.Observer.CardObserver
 import cl.uchile.dcc.gwent.Visitor.Visitor
 import cl.uchile.dcc.gwent.Subject
 
@@ -17,7 +17,7 @@ import cl.uchile.dcc.gwent.Subject
  */
 
 case class WeatherCards(private val name:String, private val ability:Ability) extends Cards {
-  private var Observers:List[Observer]=List[Observer]()
+  private var Observers:List[CardObserver]=List[CardObserver]()
   
   /**
    * Gets the name of the weather card.
@@ -58,7 +58,7 @@ case class WeatherCards(private val name:String, private val ability:Ability) ex
     visitor.visitWeatherCard(this)
   }
 
-  def registerObserver(obs: Observer): Unit={
+  def registerObserver(obs: CardObserver): Unit={
     Observers=obs :: Observers
   }
 

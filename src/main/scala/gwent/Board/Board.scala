@@ -4,7 +4,7 @@ package gwent.Board
 import gwent.CardClasses.{MeleeCards, RangeCards, SiegeCards, WeatherCards}
 
 import cl.uchile.dcc.gwent.Cards
-import cl.uchile.dcc.gwent.Controller.Observer.Observer
+import cl.uchile.dcc.gwent.Controller.Observer.CardObserver
 import cl.uchile.dcc.gwent.Players.Player
 
 /**
@@ -38,7 +38,8 @@ class Board (side1: BoardSide,side2:BoardSide) {
     }
     else{
       WeatherZone = List()
-      LargoWeather=0
+      WeatherZone= carta :: WeatherZone
+      LargoWeather=1
     }
   }
 

@@ -6,23 +6,36 @@ import cl.uchile.dcc.gwent.Players.Player
 
 class EndRound(context:GameController) extends GameState(context){
 
-  override def toEndGame(): Unit ={
-    context.state = new EndGame(context)
-  }
-
   override def toStartRound(): Unit = {
     context.state = new StartRound(context)
+    context.ShuffleDeck()
   }
 
-  /*
-  override def getWinner(p: Player, c: Player): String = {
-    if (p.getTotalStrenght > c.getTotalStrenght) {
-      p.getName
+  override def LoseGems(p: Player, c: Player): Unit = {
+    if (p.getSideStrenght > c.getSideStrenght){
+      c.losegem()
+      CheckIfTheGameEnded()
     }
-    else {
-      c.getName
+    else if (p.getSideStrenght < c.getSideStrenght){
+      p.losegem()
+      CheckIfTheGameEnded()
     }
+    else{
+      p.losegem()
+      c.losegem()
+      CheckIfTheGameEnded()
+    }
+
   }
-  */
+  private def CheckIfTheGameEnded():Unit={
+    try{
+      context.toStartRound()
+    }
+    catch {
+      case e: InvalidTransitionException =>
+    }
+
+  }
+
 
 }

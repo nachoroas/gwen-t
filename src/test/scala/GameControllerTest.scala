@@ -90,7 +90,6 @@ class GameControllerTest extends FunSuite {
     Controller.toStartRound()
     assertEquals(Controller.getState(),"StartRound")
   }
-
   test("Changing states and doing action in StartRound"){
     Controller.toStartRound()
     assertEquals(Controller.getState(),"StartRound")
@@ -136,10 +135,16 @@ class GameControllerTest extends FunSuite {
     catch {
       case e: InvalidActionException => assertEquals(e.getMessage,"Cannot do doPlayCard in StartRound")
     }
-    assertEquals(Controller.getManoPLength,5)
+    assertEquals(Controller.getManoPLength,10)
     Controller.doDrawCard()
-    assertEquals(Controller.getManoPLength,6)
-    assertEquals(Controller.getState(),"PlayerTurn")
+    assertEquals(Controller.getManoPLength,10)
+    Controller.doPlayCard(0)
+    assertEquals(Controller.getManoPLength,9)
+    Controller.doPass_turn()
+    Controller.doPass_turn()
+    assertEquals(Controller.getState(),"StartRound")
+    Controller.doDrawCard()
+    assertEquals(Controller.getManoPLength,10)
   }
   test("Changing states between player and Cpu"){
     Controller.toStartRound()
@@ -165,7 +170,7 @@ class GameControllerTest extends FunSuite {
       case e: InvalidTransitionException => assertEquals(e.getMessage,"Cannot transition from PlayerTurn to toEndRound")
     }
     Controller.doPlayCard(0)
-    assertEquals(Controller.getManoPLength,4)
+    assertEquals(Controller.getManoPLength,9)
     assertEquals(Controller.getBoardNcards,1)
     assertEquals(Controller.getState(),"CPU_turn")
     try{
@@ -195,7 +200,7 @@ class GameControllerTest extends FunSuite {
     Controller.toPlayer_turn()
     assertEquals(Controller.getState(),"PlayerTurn")
   }
-  test("Changing to posible states only"){
+  test("Changing to possible states only"){
     Controller.toStartRound()
     assertEquals(Controller.getState(),"StartRound")
     Controller.toPlayer_turn()
@@ -207,8 +212,6 @@ class GameControllerTest extends FunSuite {
     Controller.doPass_turn()
     assertEquals(Controller.getState(),"PerpetualCPU")
     Controller.doPass_turn()
-    assertEquals(Controller.getState(),"EndRound")
-    Controller.toStartRound()
     assertEquals(Controller.getState(),"StartRound")
     Controller.doDrawCard()
     assertEquals(Controller.getState(),"PlayerTurn")
@@ -217,8 +220,34 @@ class GameControllerTest extends FunSuite {
     Controller.doPass_turn()
     assertEquals(Controller.getState(),"PerpetualPlayer")
     Controller.doPass_turn()
-    assertEquals(Controller.getState(),"EndRound")
-    Controller.toEndGame()
     assertEquals(Controller.getState(),"EndGame")
+  }
+  test("Who won the game"){
+    Controller.toStartRound()
+    assertEquals(Controller.getState(),"StartRound")
+    Controller.toPlayer_turn()
+    assertEquals(Controller.getState(),"PlayerTurn")
+    Controller.doPlayCard(0)
+    assertEquals(Controller.getState(),"CPU_turn")
+    Controller.doPass_turn()
+    assertEquals(Controller.getState(),"PerpetualPlayer")
+    Controller.doPlayCard(0)
+    Controller.doPlayCard(0)
+    Controller.doPlayCard(0)
+    Controller.doPlayCard(0)
+    Controller.doPass_turn()
+    assertEquals(Controller.getState(),"StartRound")
+    Controller.doDrawCard()
+    assertEquals(Controller.getState(),"PlayerTurn")
+    Controller.doPlayCard(0)
+    assertEquals(Controller.getState(),"CPU_turn")
+    Controller.doPass_turn()
+    assertEquals(Controller.getState(),"PerpetualPlayer")
+    Controller.doPlayCard(0)
+    Controller.doPlayCard(0)
+    Controller.doPlayCard(0)
+    Controller.doPlayCard(0)
+    Controller.doPass_turn()
+    //assertEquals(Controller.doPass_turn(),"El Jugador ha Ganado")
   }
 }

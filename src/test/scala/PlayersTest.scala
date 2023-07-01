@@ -56,15 +56,14 @@ class PlayersTest extends FunSuite {
      Jugador1.losegem()
      assertEquals(Jugador1.gemnumber(),1)
   }
-  test("losing too much gems"){
-    Jugador1.losegem()
-    Jugador1.losegem()
-    assertEquals(Jugador1.losegem(),false)
-  }
-  test("how many cards the player have in the hand"){
+  test("Can't draw with 10 cards but can draw with less than 10 cards"){
+    assertEquals(Jugador1.handnumer(),10)
     Jugador1.DrawCard()
+    assertEquals(Jugador1.handnumer(),10)
+    Jugador1.PlayCard(0)
+    assertEquals(Jugador1.handnumer(),9)
     Jugador1.DrawCard()
-    assertEquals(Jugador1.handnumer(),7)
+    assertEquals(Jugador1.handnumer(),10)
   }
   test("you can't draw a card with no deck") {
     Mazo= new Deck()
@@ -77,17 +76,17 @@ class PlayersTest extends FunSuite {
     Jugador1 = Player("j1",Mazo,Mano,Side1)
     assertEquals(Jugador1.PlayCard(10),false)
   }
-  test("When you play a card you lose a card in the hand"){
-    assertEquals(Jugador1.PlayCard(3),true)
-    assertEquals(Jugador1.PlayCard(7),false)
-    assertEquals(Jugador1.handnumer(),4)
-  }
   test("equals between players"){
     assertEquals(Jugador1.equals(Jugador2),false)
     assertEquals(Jugador1.equals(Jugador1),true)
     assertEquals(Jugador1.equals(new MeleeCards("j1",1,new NoAbility)),false)
   }
   test("playing 6 cards of a 5-cards hand"){
+    Jugador1.PlayCard(0)
+    Jugador1.PlayCard(0)
+    Jugador1.PlayCard(0)
+    Jugador1.PlayCard(0)
+    Jugador1.PlayCard(0)
     Jugador1.PlayCard(0)
     Jugador1.PlayCard(0)
     Jugador1.PlayCard(0)

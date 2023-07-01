@@ -119,6 +119,9 @@ class Deck (){
     mazo = card :: mazo
     large= large+1
   }
+  def Shuffle():Unit={
+    mazo = Random.shuffle(mazo)
+  }
 
 
 }
