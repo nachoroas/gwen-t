@@ -31,16 +31,9 @@ class Board (side1: BoardSide,side2:BoardSide) {
    *
    * @param carta The weather card to be played.
    */
-  def playcard(carta: WeatherCards): Unit = {
-    if (carta.getAbility()!="ClearWeather") {
-      WeatherZone = carta :: WeatherZone
-      LargoWeather += 1
-    }
-    else{
-      WeatherZone = List()
-      WeatherZone= carta :: WeatherZone
-      LargoWeather=1
-    }
+  def PlayWeatherCard(carta: WeatherCards): Unit = {
+    WeatherZone=List(carta)
+    LargoWeather=1
   }
 
   /**
@@ -50,6 +43,12 @@ class Board (side1: BoardSide,side2:BoardSide) {
    */
   def Ncards:Int={
     side1.getNcards+side2.getNcards+LargoWeather
+  }
+  def ClearAllBoard():Unit={
+    side1.ClearSide()
+    side2.ClearSide()
+    WeatherZone=List()
+    LargoWeather=0
   }
   
 }

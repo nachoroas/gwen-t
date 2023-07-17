@@ -5,6 +5,8 @@ import gwent.Board.{Board, BoardSide}
 import gwent.Cards
 import gwent.Players.{Deck, Hand, Player}
 
+import cl.uchile.dcc.gwent.CardClasses.CardAbilities.{MoralReinforcement, NoAbility}
+import cl.uchile.dcc.gwent.CardClasses.{MeleeCards, RangeCards, SiegeCards, WeatherCards}
 import cl.uchile.dcc.gwent.Controller.Observer.PlayerObserver
 import cl.uchile.dcc.gwent.Controller.States.{EndGame, GameState, StartGame}
 
@@ -23,16 +25,15 @@ class GameController() extends PlayerObserver {
   private val mazoCPU: Deck = new Deck
   mazoP.initiator()
   mazoCPU.initiator()
-  private val ManoP:Hand = new Hand(mazoP) //not private for testing
+  private val ManoP:Hand = new Hand(mazoP)
   private val ManoCPU:Hand = new Hand(mazoCPU)
   ManoP.incial(mazoP)
   ManoCPU.incial(mazoCPU)
-  private val player: Player = Player("Player",mazoP,ManoP,Side1)
-  private val CPU: Player = Player("CPU",mazoCPU,ManoCPU,Side2)
+  private var player: Player = Player("Player",mazoP,ManoP,Side1)
+  private var CPU: Player = Player("CPU",mazoCPU,ManoCPU,Side2)
   player.registerObserver(this)
   CPU.registerObserver(this)
 
-  
   def getBoardNcards:Int={
     Board.Ncards
   }
@@ -77,6 +78,33 @@ class GameController() extends PlayerObserver {
   }
   def ShuffleDeck():Unit={
     state.ShuffleDeck(player,CPU)
+  }
+  def ClearBoard():Unit={
+    state.ClearBoard(Board)
+  }
+  def TestsMode():Unit={
+    //this is for a test only and is like giving the player a god card to win
+    val MegaMelee: MeleeCards = MeleeCards("Melee1", 100, new MoralReinforcement)
+    val Test2: SiegeCards = SiegeCards("Melee1", 0, new NoAbility)
+    val mazoPp: Deck = new Deck
+    mazoPp.initiator()
+    mazoPp.addCard(MegaMelee)
+    val ManoPp:Hand = new Hand(mazoPp)
+    ManoPp.draw_card(mazoPp)
+    player=Player("Player",mazoPp,ManoPp,Side1)
+    //this is for also testing how the cpu plays
+    val mazoCC: Deck = new Deck
+    mazoCC.initiator()
+    val a: MeleeCards = MeleeCards("alejandro", 5, new NoAbility)
+    val d: WeatherCards = WeatherCards("Nice weather", new NoAbility)
+    mazoCC.addCard(a)
+    mazoCC.addCard(d)
+    val ManoCC: Hand = new Hand(mazoCC)
+    ManoCC.draw_card(mazoCC)
+    ManoCC.draw_card(mazoCC)
+    CPU = Player("Player", mazoCC, ManoCC, Side2)
+
+
   }
   def update(player: Player): Unit ={
     if (player.equals(CPU)){

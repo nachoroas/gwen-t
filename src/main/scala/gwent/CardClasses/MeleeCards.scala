@@ -27,7 +27,7 @@ case class MeleeCards (override val name:String,override val strenght:Int,overri
    * card.be_played(gameBoardSide)  // Returns true or false
    */
   def be_played(side: BoardSide): Unit = {
-    side.playcard(this)
+    side.PlayMeleeCard(this)
     
   }
 

@@ -1,8 +1,11 @@
 package cl.uchile.dcc
-import cl.uchile.dcc.gwent.CardClasses.CardAbilities.{Ability, ClearWeather, MoralReinforcement, NoAbility, TightBond}
-import cl.uchile.dcc.gwent.CardClasses.Effects.{Frozen, MoralReinforcementEffect, TightBondEffect}
-import cl.uchile.dcc.gwent.CardClasses.{MeleeCards, RangeCards, SiegeCards, WeatherCards}
-import cl.uchile.dcc.gwent.Cards
+package CardsTests
+
+import gwent.CardClasses.CardAbilities.*
+import gwent.CardClasses.Effects.{Frozen, MoralReinforcementEffect, TightBondEffect}
+import gwent.CardClasses.{MeleeCards, RangeCards, SiegeCards, WeatherCards}
+import gwent.Cards
+
 import munit.{FunSuite, Slow}
 
 import scala.None

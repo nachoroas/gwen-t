@@ -4,7 +4,7 @@ package gwent.CardClasses
 import gwent.Cards
 
 import cl.uchile.dcc.gwent.Board.{Board, BoardSide}
-import cl.uchile.dcc.gwent.CardClasses.CardAbilities.Ability
+import cl.uchile.dcc.gwent.CardClasses.CardAbilities.{Ability, BitingFrost, ClearWeather, ImpenetrableFog, TorrentialRain}
 import cl.uchile.dcc.gwent.Controller.Observer.CardObserver
 import cl.uchile.dcc.gwent.Visitor.Visitor
 import cl.uchile.dcc.gwent.Subject
@@ -40,7 +40,7 @@ case class WeatherCards(private val name:String, private val ability:Ability) ex
    */
 
   def be_played(Side: BoardSide): Unit = {
-    Side.playcard(this)
+    Side.PlayWeatherCard(this)
   }
 
   /**
@@ -62,11 +62,13 @@ case class WeatherCards(private val name:String, private val ability:Ability) ex
     Observers=obs :: Observers
   }
 
-  def notifyObserver(): Unit ={
-    for(r<-Observers){
-      r.update(ability)
+  def notifyObserver(): Unit = {
+    for (r <- Observers) {
+      ability.notify(r)
       }
     }
+
+  
     
   
 }

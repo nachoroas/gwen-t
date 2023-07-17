@@ -13,25 +13,24 @@ class CPU_turn(context:GameController) extends GameState(context){
   }
 
   override def doCPU_turn(j:Player,p:Player,M:Hand): Unit = {
-    if (j.getTotalStrenght > p.getTotalStrenght) {
+    if (j.getTotalStrenght > p.getSideStrenght) {
       j.PlayCard(Random.nextInt(M.Largu()))
-      toPlayerTurn() //MM
+      toPlayerTurn() 
     }
     else {
       val WC = j.getWeathersCard
       if (WC.nonEmpty) {
         j.PlayCard(WC.head)
-        toPlayerTurn() //MMM
+        toPlayerTurn()
       }
       else {
-        doPass_turn() //mmm
+        doPass_turn() 
       }
     }
   }
 
   override def doPass_turn(): Unit = {
     context.state= new PerpetualPlayer(context)
-    
   }
 
 }

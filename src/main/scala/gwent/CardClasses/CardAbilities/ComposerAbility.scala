@@ -3,6 +3,8 @@ package gwent.CardClasses.CardAbilities
 
 import gwent.CardClasses.{MeleeCards, RangeCards, SiegeCards, UnitCard}
 
+import cl.uchile.dcc.gwent.Controller.Observer.CardObserver
+
 class ComposerAbility extends Ability {
 
   def activateM(list:List[MeleeCards]): Unit = {
@@ -11,6 +13,9 @@ class ComposerAbility extends Ability {
   }
   def activateS(list: List[SiegeCards]): Unit = {
   }
+  def notify(r: CardObserver): Unit={
+}
   override def toString: String = getClass.getSimpleName
+
 
 }

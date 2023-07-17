@@ -1,35 +1,36 @@
 package cl.uchile.dcc
+package GameControllerTests
 
-import cl.uchile.dcc.gwent.Board.{Board, BoardSide}
-import cl.uchile.dcc.gwent.CardClasses.{MeleeCards, RangeCards, SiegeCards, WeatherCards}
-import cl.uchile.dcc.gwent.Controller.GameController
-import cl.uchile.dcc.gwent.Controller.States.{InvalidActionException, InvalidTransitionException}
-import cl.uchile.dcc.gwent.Players.{Deck, Hand, Player}
+import gwent.Board.{Board, BoardSide}
+import gwent.CardClasses.{MeleeCards, RangeCards, SiegeCards, WeatherCards}
+import gwent.Controller.GameController
+import gwent.Controller.States.{InvalidActionException, InvalidTransitionException}
+import gwent.Players.{Deck, Hand, Player}
+
+import cl.uchile.dcc.gwent.CardClasses.CardAbilities.{Ability, ClearWeather, MoralReinforcement, NoAbility, TightBond}
 import munit.FunSuite
 
 class GameControllerTest extends FunSuite {
-  var Jugador1: Player = _
-  var Mazo: Deck = _
-  var Mano: Hand = _
-  var Side1: BoardSide = _
-  var Side2: BoardSide = _
-  var Board: Board = _
   var Melee1: MeleeCards = _
   var Ranged1: RangeCards = _
   var Siege1: SiegeCards = _
   var Weather: WeatherCards = _
   var Controller: GameController = _
+  var NA: Ability = _
+  var MR: Ability = _
+  var TB: Ability = _
+  var CW: Ability = _
 
   override def beforeEach(context: BeforeEach): Unit = {
-    Mazo = new Deck()
-    Mazo.initiator()
-    Mano = new Hand(Mazo)
-    Mano.incial(Mazo)
-    Side1 = new BoardSide
-    Side2 = new BoardSide
-    Board = new Board(Side1, Side2)
-    Board.setSides()
     Controller= new GameController()
+    NA = new NoAbility
+    MR = new MoralReinforcement
+    TB = new TightBond
+    CW = new ClearWeather
+    Melee1 = MeleeCards("alejandro", 5, NA)
+    Ranged1 = RangeCards("Pepe", 7, MR)
+    Siege1 = SiegeCards("Catapulta", 2, TB)
+    Weather = WeatherCards("Nice weather", CW)
   }
   test("Changing states and doing actions in StartGame"){
     assertEquals(Controller.getState(),"StartGame")
@@ -86,6 +87,18 @@ class GameControllerTest extends FunSuite {
     }
     catch {
       case e: InvalidActionException => assertEquals(e.getMessage,"Cannot do doCPU_turn in StartGame")
+    }
+    try {
+      Controller.LoseGems()
+    }
+    catch {
+      case e:InvalidActionException => assertEquals(e.getMessage,"Cannot do LoseGems in StartGame")
+    }
+    try {
+      Controller.ShuffleDeck()
+    }
+    catch {
+      case e:InvalidActionException => assertEquals(e.getMessage,"Cannot do ShuffleDeck in StartGame")
     }
     Controller.toStartRound()
     assertEquals(Controller.getState(),"StartRound")
@@ -222,7 +235,7 @@ class GameControllerTest extends FunSuite {
     Controller.doPass_turn()
     assertEquals(Controller.getState(),"EndGame")
   }
-  test("Who won the game"){
+  test("Player won the game"){
     Controller.toStartRound()
     assertEquals(Controller.getState(),"StartRound")
     Controller.toPlayer_turn()
@@ -248,6 +261,80 @@ class GameControllerTest extends FunSuite {
     Controller.doPlayCard(0)
     Controller.doPlayCard(0)
     Controller.doPass_turn()
-    //assertEquals(Controller.doPass_turn(),"El Jugador ha Ganado")
+    assertEquals(Controller.getState(),"EndGame")
+    //"El Jugador ha Ganado"
+  }
+  test("CPU won the game"){
+    Controller.toStartRound()
+    assertEquals(Controller.getState(), "StartRound")
+    Controller.toPlayer_turn()
+    assertEquals(Controller.getState(), "PlayerTurn")
+    Controller.doPass_turn()
+    assertEquals(Controller.getState(), "PerpetualCPU")
+    Controller.doCPU_turn()
+    assertEquals(Controller.getState(), "StartRound")
+    Controller.toPlayer_turn()
+    Controller.doPlayCard(0)
+    Controller.doCPU_turn()
+    Controller.doPlayCard(0)
+    Controller.doCPU_turn()
+    Controller.doPlayCard(0)
+    Controller.doCPU_turn()
+    Controller.doPlayCard(0)
+    Controller.doCPU_turn()
+    Controller.doPlayCard(0)
+    Controller.doCPU_turn()
+    Controller.doPass_turn()
+    Controller.doCPU_turn()
+    assertEquals(Controller.getState(),"EndGame")
+    //"La CPU ha Ganado"
+  }
+  test("How the cpu plays in CPU_turn also checking the cleanBoard method"){
+    val MegaMelee: MeleeCards = MeleeCards("Melee1", 100, new MoralReinforcement)
+    val Test2: SiegeCards = SiegeCards("Melee1", 0, new NoAbility)
+    //this card is only used to test the methods
+    Controller.toStartRound()
+    assertEquals(Controller.getState(), "StartRound")
+    Controller.toPlayer_turn()
+    assertEquals(Controller.getState(), "PlayerTurn")
+    Controller.doPlayCard(0)
+    assertEquals(Controller.getState(), "CPU_turn")
+    Controller.doPass_turn()
+    assertEquals(Controller.getState(), "PerpetualPlayer")
+    Controller.doPass_turn()
+    assertEquals(Controller.getBoardNcards, 0)
+    assertEquals(Controller.getState(), "StartRound")
+    Controller.toPlayer_turn()
+    assertEquals(Controller.getState(), "PlayerTurn")
+    Controller.TestsMode()
+    //this is to test the methods of the CPU
+    Controller.doPlayCard(MegaMelee)
+    //player has 100 strenght in side
+    Controller.doCPU_turn()
+    //cpu plays a weather card
+    Controller.doPlayCard(0)
+    //player plays a random card
+    Controller.doCPU_turn()
+    //cpu has no weather card so passes turn
+    assertEquals(Controller.getState(), "PerpetualPlayer")
+    Controller.doPlayCard(Test2)
+  }
+  test("How the cpu plays in Perpetual CPU"){
+
+    Controller.toStartRound()
+    Controller.toPlayer_turn()
+    Controller.TestsMode()
+    //this is to test the methods of the CPU
+    Controller.doPlayCard(0)
+    //player has 100 strenght in side
+    Controller.toPlayer_turn()
+    Controller.doPass_turn()
+    assertEquals(Controller.getState(), "PerpetualCPU")
+    Controller.doCPU_turn()
+    //cpu plays a weather card
+    Controller.doCPU_turn()
+    //cpu has no weather card so passes turn
+    assertEquals(Controller.getState(), "StartRound")
+
   }
 }

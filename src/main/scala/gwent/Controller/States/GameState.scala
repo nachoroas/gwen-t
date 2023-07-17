@@ -3,6 +3,7 @@ package gwent.Controller.States
 
 import gwent.Cards
 
+import cl.uchile.dcc.gwent.Board.Board
 import cl.uchile.dcc.gwent.Controller.GameController
 import cl.uchile.dcc.gwent.Players.{Hand, Player}
 
@@ -43,6 +44,9 @@ class GameState protected(val context: GameController) {
   }
   def LoseGems(p:Player,c:Player):Unit={
     ActionError("LoseGems")
+  }
+  def ClearBoard(b:Board):Unit={
+    ActionError("ClearBoard")
   }
   def ShuffleDeck(p:Player,c:Player):Unit={
     ActionError("ShuffleDeck")

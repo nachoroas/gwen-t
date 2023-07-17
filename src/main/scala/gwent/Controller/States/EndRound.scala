@@ -8,6 +8,7 @@ class EndRound(context:GameController) extends GameState(context){
 
   override def toStartRound(): Unit = {
     context.state = new StartRound(context)
+    context.ClearBoard()
     context.ShuffleDeck()
   }
 

@@ -10,18 +10,23 @@ import scala.util.Random
 class PerpetualCPU(context:GameController) extends GameState(context) {
 
   override def doCPU_turn(j:Player,p:Player,m:Hand): Unit = {
-    if (j.getTotalStrenght > p.getTotalStrenght) {
-      j.PlayCard(Random.nextInt(m.Largu())) //MM
+    if (j.getSideStrenght>p.getSideStrenght){
+      doPass_turn()
+    }
+    else if (j.getTotalStrenght >= p.getSideStrenght) {
+      j.PlayCard(Random.nextInt(m.Largu()))
+      doCPU_turn(j,p,m)
     }
     else {
       val WC = j.getWeathersCard
       if (WC.nonEmpty) {
-        j.PlayCard(WC.head) 
+        j.PlayCard(WC.head)
       }
       else {
-        doPass_turn() 
+        doPass_turn()
       }
     }
+    
   }
 
   override def doPass_turn(): Unit = {

@@ -1,9 +1,11 @@
 package cl.uchile.dcc
+package PlayerTests
 
-import cl.uchile.dcc.gwent.Board.{Board, BoardSide}
-import cl.uchile.dcc.gwent.CardClasses.CardAbilities.{Ability, ClearWeather, MoralReinforcement, NoAbility, TightBond}
-import cl.uchile.dcc.gwent.CardClasses.{MeleeCards, RangeCards, SiegeCards, WeatherCards}
-import cl.uchile.dcc.gwent.Players.{Deck, Hand, Player}
+import gwent.Board.{Board, BoardSide}
+import gwent.CardClasses.CardAbilities.*
+import gwent.CardClasses.{MeleeCards, RangeCards, SiegeCards, WeatherCards}
+import gwent.Players.{Deck, Hand, Player}
+
 import munit.FunSuite
 
 import javax.print.attribute.standard.MediaSize.NA
@@ -67,7 +69,7 @@ class PlayersTest extends FunSuite {
   }
   test("you can't draw a card with no deck") {
     Mazo= new Deck()
-    Jugador1 = new Player("j1",Mazo,Mano,Side1)
+    Jugador1 = Player("j1",Mazo,Mano,Side1)
     assertEquals(Jugador1.DrawCard(),false)
   }
   test("you can't play a card with no hand"){
@@ -79,7 +81,7 @@ class PlayersTest extends FunSuite {
   test("equals between players"){
     assertEquals(Jugador1.equals(Jugador2),false)
     assertEquals(Jugador1.equals(Jugador1),true)
-    assertEquals(Jugador1.equals(new MeleeCards("j1",1,new NoAbility)),false)
+    assertEquals(Jugador1.equals(MeleeCards("j1",1,new NoAbility)),false)
   }
   test("playing 6 cards of a 5-cards hand"){
     Jugador1.PlayCard(0)
@@ -122,5 +124,8 @@ class PlayersTest extends FunSuite {
     Mano.draw_card(Mazo)
     val J1: Player = Player("pepe", Mazo, Mano, Side1)
     assertEquals(J1.getWeathersCard.head,Weather)
+  }
+  test("playing a Card out of the hand large"){
+    assertEquals(Jugador1.PlayCard(11),false)
   }
 }

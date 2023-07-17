@@ -1,9 +1,10 @@
 package cl.uchile.dcc
+package BoardTests
 
 import gwent.Board.{Board, BoardSide}
+import gwent.CardClasses.{MeleeCards, RangeCards, SiegeCards, WeatherCards}
 import gwent.Players.{Deck, Hand, Player}
 
-import cl.uchile.dcc.gwent.CardClasses.{MeleeCards, RangeCards, SiegeCards, WeatherCards}
 import munit.FunSuite
 
 class BoardTest extends FunSuite {
@@ -27,7 +28,7 @@ class BoardTest extends FunSuite {
     Side2 = new BoardSide
     Board = new Board(Side1, Side2)
     Board.setSides()    
-    Jugador1 = new Player("j1", Mazo, Mano, Side1)
+    Jugador1 = Player("j1", Mazo, Mano, Side1)
   }
   test("p1 playing cards"){
     Jugador1.PlayCard(0)
@@ -37,14 +38,14 @@ class BoardTest extends FunSuite {
     assertEquals(Board.Ncards,4)
   }
   test("Playing cards in the two sides"){
-    Side1.playcard(Melee1)
-    Side2.playcard(Ranged1)
+    Side1.PlayMeleeCard(Melee1)
+    Side2.PlayRangedCard(Ranged1)
     assertEquals(Board.Ncards,2)
   }
   test("Clearing one side"){
-    Side1.playcard(Melee1)
-    Side1.playcard(Ranged1)
-    Side1.playcard(Siege1)
+    Side1.PlayMeleeCard(Melee1)
+    Side1.PlayRangedCard(Ranged1)
+    Side1.PlaySiegeCard(Siege1)
     assertEquals(Side1.getNcards,3)
     Side1.ClearSide()
     assertEquals(Side1.getNcards,0)

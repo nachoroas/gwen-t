@@ -13,5 +13,7 @@ trait UnitCard extends Cards{
   def addEffect(effect:TightBondEffect):Unit
 
   def addEffect(effect:MoralReinforcementEffect):Unit
+  
+  def removeEffect():Unit
 
 }

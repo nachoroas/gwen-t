@@ -15,7 +15,7 @@ import scala.collection.mutable.ListBuffer
  *
  * @param Principal_deck the deck where to get the cards
  *
- * @constructor the class is defined with a empty list and its large but has a funtion to
+ * @constructor the class is defined with a empty list and its large but has a function to
  *              draw 5 cards from the designated deck and set the large to 5
  *
  * @example
@@ -60,9 +60,9 @@ class Hand (Principal_deck:Deck)  {
    * @param side  The board side on which to play the card.
    * @return `true` if the card was successfully played, `false` if the index is out of bounds.
    * @example
-   * val x = new Deck()
-   * val y = new Hand(x)
-   * y.use_card(2, side) // Returns false if the hand has no cards at index 2
+   * val deck = new Deck()
+   * val hand = new Hand(deck)
+   * hand.useCard(2, side) // Returns false if the hand has no cards at index 2
    */
    def use_card(index:Int,side:BoardSide):Boolean={
      if (index<largo) {
@@ -78,15 +78,35 @@ class Hand (Principal_deck:Deck)  {
        false
      }
   }
+
+  /**
+   * Uses a specific card from the hand and plays it on the assigned board side.
+   *
+   * @param card The card to play.
+   * @param side The board side on which to play the card.
+   */
   def use_card(card:Cards,side:BoardSide):Unit={
-    for (r<-mano){
-      if (r==card){
+    var i=0
+    var found=false
+    //for (r<-mano){
+    while(i < (largo) && !found){
+      if (mano(i).equals(card)){
+        card.registerObserver(side)
         card.be_played(side)
-        mano=mano.filter(_ != r)
+        card.notifyObserver()
+        found=true
+        mano =mano.patch(i, Nil, 1)
         largo=largo-1
       }
+      i=i+1
     }
   }
+
+  /**
+   * Returns the weather cards present in the hand.
+   *
+   * @return A list of weather cards in the hand.
+   */
   def getWeathersCard:ListBuffer[WeatherCards]={
     val v=new getWeatherCardVisitor
     for (r<-mano){
@@ -100,9 +120,9 @@ class Hand (Principal_deck:Deck)  {
    *
    * @return The number of cards in the hand.
    * @example
-   * val x = new Deck()
-   * val y = new Hand(x)
-   * y.getHandSize() // Returns the current size of the hand
+   * val deck = new Deck()
+   * val hand = new Hand(deck)
+   * hand.Largu() // Returns the current size of the hand
    */
   def Largu(): Int = largo
 
@@ -126,6 +146,12 @@ class Hand (Principal_deck:Deck)  {
       x=x+1
     }
   }
+
+  /**
+   * Returns the total strength of all cards in the hand.
+   *
+   * @return The total strength of the hand.
+   */
   def getTotalStrenght:Int={
     val v= new getStrenghtVisitor
     for (r <- mano){

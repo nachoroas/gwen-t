@@ -25,4 +25,11 @@ class MoralReinforcement extends ComposerAbility {
     }
   }
 
+  override def equals(obj: Any): Boolean = {
+    obj match {
+      case _: MoralReinforcement => true
+      case _ => false
+    }
+  }
+
 }

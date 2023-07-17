@@ -1,7 +1,9 @@
 package cl.uchile.dcc
 package gwent.CardClasses.CardAbilities
 
-import gwent.CardClasses.{MeleeCards, SiegeCards, RangeCards, WeatherCards}
+import gwent.CardClasses.{MeleeCards, RangeCards, SiegeCards, WeatherCards}
+
+import cl.uchile.dcc.gwent.Controller.Observer.CardObserver
 
 class ClearWeather extends ComposerAbility {
 
@@ -19,6 +21,16 @@ class ClearWeather extends ComposerAbility {
     for (r <- list) {
       r.removeEffect()
     }
+  }
+  override def equals(obj: Any): Boolean = {
+    obj match {
+      case _: ClearWeather => true
+      case _ => false
+    }
+  }
+
+  override def notify(r: CardObserver): Unit = {
+    r.update(this)
   }
 
 
