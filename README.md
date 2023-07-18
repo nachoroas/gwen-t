@@ -13,4 +13,4 @@ This project's goal is to create a (simplified) clone of the
 
 ---
 
-**The rest of the documentation is left for the users of this template to complete**
+![Diagrama de estados](https://github.com/dcc-cc3002/gwen-t-nachoroas/blob/tarea-2/entrega-final/imagen_2023-07-17_222556395.png?raw=true)
