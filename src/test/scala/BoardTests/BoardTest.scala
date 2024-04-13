@@ -1,9 +1,9 @@
 package cl.uchile.dcc
 package BoardTests
 
-import gwent.Board.{Board, BoardSide}
-import gwent.CardClasses.{MeleeCards, RangeCards, SiegeCards, WeatherCards}
-import gwent.Players.{Deck, Hand, Player}
+import model.Board.{Board, BoardSide}
+import model.CardClasses.{MeleeCards, RangeCards, SiegeCards, WeatherCards}
+import model.Players.{Deck, Hand, Player}
 
 import munit.FunSuite
 

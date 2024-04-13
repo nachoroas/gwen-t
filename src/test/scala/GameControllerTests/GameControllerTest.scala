@@ -1,13 +1,13 @@
 package cl.uchile.dcc
 package GameControllerTests
 
-import gwent.Board.{Board, BoardSide}
-import gwent.CardClasses.{MeleeCards, RangeCards, SiegeCards, WeatherCards}
-import gwent.Controller.GameController
-import gwent.Controller.States.{InvalidActionException, InvalidTransitionException}
-import gwent.Players.{Deck, Hand, Player}
+import model.Board.{Board, BoardSide}
+import model.CardClasses.{MeleeCards, RangeCards, SiegeCards, WeatherCards}
+import model.Players.{Deck, Hand, Player}
+import cl.uchile.dcc.Controller.GameController
+import cl.uchile.dcc.Controller.States.{InvalidActionException, InvalidTransitionException}
 
-import cl.uchile.dcc.gwent.CardClasses.CardAbilities.{Ability, ClearWeather, MoralReinforcement, NoAbility, TightBond}
+import cl.uchile.dcc.model.CardClasses.CardAbilities.{Ability, ClearWeather, MoralReinforcement, NoAbility, TightBond}
 import munit.FunSuite
 
 class GameControllerTest extends FunSuite {

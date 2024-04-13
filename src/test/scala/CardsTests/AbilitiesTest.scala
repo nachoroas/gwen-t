@@ -1,11 +1,11 @@
 package cl.uchile.dcc
 package CardsTests
 
-import gwent.CardClasses.CardAbilities.{Ability, BitingFrost, ClearWeather, ImpenetrableFog, MoralReinforcement, NoAbility, TightBond, TorrentialRain}
-import gwent.CardClasses.{MeleeCards, RangeCards, SiegeCards, WeatherCards}
+import model.CardClasses.CardAbilities.{Ability, BitingFrost, ClearWeather, ImpenetrableFog, MoralReinforcement, NoAbility, TightBond, TorrentialRain}
+import model.CardClasses.{MeleeCards, RangeCards, SiegeCards, WeatherCards}
 
-import cl.uchile.dcc.gwent.Board.{Board, BoardSide}
-import cl.uchile.dcc.gwent.Players.{Deck, Hand, Player}
+import cl.uchile.dcc.model.Board.{Board, BoardSide}
+import cl.uchile.dcc.model.Players.{Deck, Hand, Player}
 import munit.FunSuite
 
 class AbilitiesTest extends FunSuite {

@@ -1,10 +1,10 @@
 package cl.uchile.dcc
 package CardsTests
 
-import gwent.CardClasses.CardAbilities.*
-import gwent.CardClasses.Effects.{Frozen, MoralReinforcementEffect, TightBondEffect}
-import gwent.CardClasses.{MeleeCards, RangeCards, SiegeCards, WeatherCards}
-import gwent.Cards
+import model.CardClasses.CardAbilities.*
+import model.CardClasses.Effects.{Frozen, MoralReinforcementEffect, TightBondEffect}
+import model.CardClasses.{MeleeCards, RangeCards, SiegeCards, WeatherCards}
+import model.Cards
 
 import munit.{FunSuite, Slow}
 
